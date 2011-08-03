@@ -1,0 +1,13 @@
+escape ^Oo
+startup_message off
+hardstatus alwayslastline
+hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B}%Y-%m-%d %{W}%c %{g}]'
+bindkey -k F2 screen
+bindkey -k F3 prev
+bindkey -k F4 next
+
+screen -t shell0 0
+screen -t shell1 1
+screen -t shell2 2
+
+
