@@ -102,10 +102,11 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-M2_HOME=/usr/local/maven
-M2=$M2_HOME/bin
-PATH=$M2:$PATH
-JAVA_HOME=/usr/lib/jvm/java-6-openjdk
-CATALINA_HOME=/opt/tomcat
-EDITOR=/usr/bin/vi
+alias emacs="emacs -nw"
+alias gnome-terminal="gnome-terminal -x screen"
 
+PATH=$PATH:/var/lib/gems/1.8/bin
+EDITOR="emacs -nw"
+export JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

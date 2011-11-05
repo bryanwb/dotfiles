@@ -1,3 +1,6 @@
 [user]
 	name = Bryan Berry
 	email = bryan.berry@gmail.com
+
+[core]
+	editor = vim
