@@ -1,13 +1,8 @@
 ;; This is an emacs file I created to customize emacs
 ;; The settings should take effect on emacs start-up
 
-;; Most of my settings can be found in individual files in ~/.emacs.d/
-;;(add-to-list 'load-path "~/.emacs.d/")
+(add-to-list 'load-path "~/.emacs.d/")
 (require 'org)
-;;(require 'weblogger)
-;;(require 'mytwitter)
-;;(require 'mypython)
-;;;(require 'mercurial)
 '(width . 79)
 
 ;; This enables use of the X clipboard for copying and pasting
@@ -25,15 +20,11 @@
 
 ;; This displays the current column number
 (setq column-number-mode t)
-(global-set-key [f2] 'switch-to-buffer)
-(global-set-key [f3] 'find-file)
-(global-set-key [f4] 'other-window)
-(global-set-key [f5] 'keyboard-quit)
-;;(global-set-key "\C-q" 'magit-status)
 
 ;; I am too cool to use scroll bar and tool bar!
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(menu-bar-mode 0)
 
 
 ;;to set background color to black(set-background-color "black")
@@ -75,17 +66,16 @@
  '(vhdl-speedbar-package-selected-face ((((class color) (background dark)) (:underline t :foreground "black"))))
  '(widget-field ((((class grayscale color) (background light)) (:background "DarkBlue")))))
 
-
-
 (put 'upcase-region 'disabled nil)
 
+;; this is the emacs starter kis
+(require 'package)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(package-initialize)
 
-;; loading javascript-mode
 
-;;(add-to-list 'auto-mode-alist '("\\.js\\'" . javascript-mode))
-;;(autoload 'javascript-mode "javascript" nil t)
-;;;(add-to-list 'auto-mode-alist '("\\.js\\'" . espresso-mode))
-;;;(autoload 'espresso-mode "espresso" nil t)
+
 
 
 
