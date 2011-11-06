@@ -1,16 +1,18 @@
 
 ;; ----- smex-history -----
 (
+ mkdir
+ revert-buffer
  package-install
  cd
  5x5
  arp
  dbx
- dig
- erc
 )
 
 ;; ----- smex-data -----
 (
  (package-install . 1)
+ (mkdir . 2)
+ (revert-buffer . 1)
 )
