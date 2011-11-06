@@ -1,13 +1,13 @@
 
 ;; ----- smex-history -----
 (
+ auto-fill-mode
+ set-fill-column
  mkdir
  revert-buffer
  package-install
  cd
  5x5
- arp
- dbx
 )
 
 ;; ----- smex-data -----
@@ -15,4 +15,6 @@
  (package-install . 1)
  (mkdir . 2)
  (revert-buffer . 1)
+ (auto-fill-mode . 5)
+ (set-fill-column . 1)
 )
