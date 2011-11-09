@@ -1,23 +1,16 @@
 
 ;; ----- smex-history -----
 (
- package-install
- make-frame
- comment-region
- uncomment-region
- auto-fill-mode
- set-fill-column
- mkdir
+ cd
+ 5x5
+ arp
+ dbx
+ dig
+ erc
+ ert
 )
 
 ;; ----- smex-data -----
 (
- (package-install . 2)
- (mkdir . 2)
- (revert-buffer . 1)
- (auto-fill-mode . 5)
- (set-fill-column . 1)
- (comment-region . 2)
- (uncomment-region . 1)
- (make-frame . 1)
+ 
 )
