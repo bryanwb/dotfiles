@@ -1,16 +1,19 @@
 
 ;; ----- smex-history -----
 (
+ package-install
+ shell
+ eval-buffer
+ eshell
  cd
  5x5
  arp
- dbx
- dig
- erc
- ert
 )
 
 ;; ----- smex-data -----
 (
- 
+ (package-install . 9)
+ (eshell . 1)
+ (eval-buffer . 1)
+ (shell . 1)
 )
