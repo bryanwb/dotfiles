@@ -1,3 +1,10 @@
 ;;; -*- coding: utf-8 -*-
-(("/home/hitman/.bash_local" . 86)
- ("/home/hitman/chef-repo/.chef/knife.rb" . 498))
+(("/home/hitman/.bash_local" . 84)
+ ("/home/hitman/.bashrc" . 3532)
+ ("/home/hitman/.emacs.d/elpa/starter-kit-ruby-2.0/starter-kit-ruby-autoloads.el" . 2330)
+ ("/home/hitman/chef-repo/.chef/knife.rb" . 498)
+ ("/home/hitman/chef-repo/roles/base.rb" . 1374)
+ ("/home/hitman/pr/mojo/spice_test.rb" . 248)
+ ("/home/hitman/pr/mojo/src/main/scripts/echo.rb" . 20)
+ ("/home/hitman/pr/mojo/src/main/scripts/my_mojo.rb" . 374)
+ ("/home/hitman/pr/spice_test.rb" . 245))
