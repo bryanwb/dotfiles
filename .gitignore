@@ -1,5 +1,5 @@
 .svn
 *~
 .*.swp
-places
-.smex-items
+*/places
+*/.smex-items
