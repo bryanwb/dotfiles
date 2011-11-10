@@ -2,19 +2,18 @@
 ;; ----- smex-history -----
 (
  package-install
- auto-fill-mode
- set-fill-column
- mkdir
- revert-buffer
+ shell
+ eval-buffer
+ eshell
  cd
  5x5
+ arp
 )
 
 ;; ----- smex-data -----
 (
- (package-install . 2)
- (mkdir . 2)
- (revert-buffer . 1)
- (auto-fill-mode . 5)
- (set-fill-column . 1)
+ (package-install . 9)
+ (eshell . 1)
+ (eval-buffer . 1)
+ (shell . 1)
 )
