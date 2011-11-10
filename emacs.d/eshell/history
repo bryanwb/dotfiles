@@ -10,3 +10,10 @@ ls
 ls
 fasdfasf
 irb
+ls
+ls | less
+ls | less
+ls
+cat foo.txt  | less
+ls
+fabric                         server.rb

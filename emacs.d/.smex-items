@@ -1,19 +1,24 @@
 
 ;; ----- smex-history -----
 (
+ windmove-up
+ windmove-left
+ windmove-default-keybindings
+ eshell
+ term
  package-install
  shell
- eval-buffer
- eshell
- cd
- 5x5
- arp
 )
 
 ;; ----- smex-data -----
 (
  (package-install . 9)
- (eshell . 1)
+ (eshell . 2)
  (eval-buffer . 1)
  (shell . 1)
+ (term . 1)
+ (Info-backward-node . 1)
+ (windmove-default-keybindings . 1)
+ (windmove-left . 3)
+ (windmove-up . 1)
 )
