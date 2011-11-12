@@ -1,24 +1,25 @@
 
 ;; ----- smex-history -----
 (
+ eval-buffer
+ Info-mode
  windmove-up
  windmove-left
  windmove-default-keybindings
  eshell
  term
- package-install
- shell
 )
 
 ;; ----- smex-data -----
 (
  (package-install . 9)
  (eshell . 2)
- (eval-buffer . 1)
+ (eval-buffer . 5)
  (shell . 1)
  (term . 1)
  (Info-backward-node . 1)
  (windmove-default-keybindings . 1)
  (windmove-left . 3)
  (windmove-up . 1)
+ (Info-mode . 1)
 )
