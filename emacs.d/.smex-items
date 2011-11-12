@@ -1,20 +1,20 @@
 
 ;; ----- smex-history -----
 (
- run-ruby
+ package-install
  eval-buffer
  eshell
- package-install
  toggle-uniquify-buffer-names
  Info-mode
  windmove-left
+ term
 )
 
 ;; ----- smex-data -----
 (
- (package-install . 10)
+ (package-install . 11)
  (eshell . 3)
- (eval-buffer . 11)
+ (eval-buffer . 12)
  (shell . 1)
  (term . 1)
  (Info-backward-node . 1)
@@ -24,5 +24,5 @@
  (Info-mode . 1)
  (toggle-uniquify-buffer-names . 1)
  (inferior-ruby-mode . 3)
- (run-ruby . 3)
+ (run-ruby . 4)
 )
