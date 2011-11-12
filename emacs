@@ -25,6 +25,6 @@
 '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (package-initialize)
 
-(global-set-key (kbd "C-m") 'other-window)                                                                          
+(global-set-key (kbd "C-m") 'other-window)                
 
 
