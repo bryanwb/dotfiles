@@ -1,24 +1,28 @@
 
 ;; ----- smex-history -----
 (
- windmove-up
- windmove-left
- windmove-default-keybindings
+ run-ruby
+ eval-buffer
  eshell
- term
  package-install
- shell
+ toggle-uniquify-buffer-names
+ Info-mode
+ windmove-left
 )
 
 ;; ----- smex-data -----
 (
- (package-install . 9)
- (eshell . 2)
- (eval-buffer . 1)
+ (package-install . 10)
+ (eshell . 3)
+ (eval-buffer . 11)
  (shell . 1)
  (term . 1)
  (Info-backward-node . 1)
  (windmove-default-keybindings . 1)
  (windmove-left . 3)
  (windmove-up . 1)
+ (Info-mode . 1)
+ (toggle-uniquify-buffer-names . 1)
+ (inferior-ruby-mode . 3)
+ (run-ruby . 3)
 )

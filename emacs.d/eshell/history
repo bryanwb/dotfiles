@@ -17,3 +17,4 @@ ls
 cat foo.txt  | less
 ls
 fabric                         server.rb
+pry
