@@ -1,13 +1,13 @@
 
 ;; ----- smex-history -----
 (
- run-ruby
+ find-tag
+ describe-function
+ describe-key
+ compile
+ find-name-dired
+ find-file
  eval-buffer
- eshell
- package-install
- toggle-uniquify-buffer-names
- Info-mode
- windmove-left
 )
 
 ;; ----- smex-data -----
@@ -24,5 +24,12 @@
  (Info-mode . 1)
  (toggle-uniquify-buffer-names . 1)
  (inferior-ruby-mode . 3)
- (run-ruby . 3)
+ (run-ruby . 4)
+ (multiply-by-seven . 3)
+ (find-file . 3)
+ (find-name-dired . 1)
+ (compile . 1)
+ (describe-key . 1)
+ (describe-function . 2)
+ (find-tag . 2)
 )
