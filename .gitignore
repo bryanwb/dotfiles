@@ -3,3 +3,4 @@
 .*.swp
 emacs.d/.smex-items
 emacs.d/places
+emacs.d/bookmarks

@@ -13,6 +13,12 @@
 ;; This displays the current column number
 (setq column-number-mode t)
 
+;; disable backup
+(setq backup-inhibited t)
+
+;; disable auto save
+(setq auto-save-default nil)
+
 ;; I am too cool to use scroll bar and tool bar!
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
