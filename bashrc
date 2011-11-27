@@ -111,7 +111,7 @@ alias emacs="emacs -nw"
 alias gnome-terminal="gnome-terminal -x screen"
 
 PATH=$PATH:/var/lib/gems/1.8/bin
-export EDITOR=emacs
+export EDITOR=vi
 export JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

@@ -1,5 +1,6 @@
 .svn
 *~
 .*.swp
-.smex-items
-places
+emacs.d/.smex-items
+emacs.d/places
+emacs.d/bookmarks
