@@ -1,7 +1,6 @@
 set nobackup
 set nowritebackup
 set noswapfile
-set columns=79
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
