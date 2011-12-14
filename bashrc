@@ -108,7 +108,7 @@ fi
 
 
 alias emacs="emacs -nw"
-#alias gnome-terminal="gnome-terminal -x screen"
+alias gnome-terminal="gnome-terminal -x screen"
 
 PATH=$PATH:/var/lib/gems/1.8/bin
 export EDITOR=vi

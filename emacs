@@ -35,9 +35,9 @@
 keymap.")
 
 (define-key my-keys-minor-mode-map (kbd "C-l") 'other-window)
-(define-key my-keys-minor-mode-map (kbd "<f2>") 'multi-term)
-(define-key my-keys-minor-mode-map (kbd "<f3>") 'multi-term-prev)
-(define-key my-keys-minor-mode-map (kbd "<f4>") 'multi-term-next)
+;;(define-key my-keys-minor-mode-map (kbd "<f2>") 'multi-term)
+;;(define-key my-keys-minor-mode-map (kbd "<f3>") 'multi-term-prev)
+;;(define-key my-keys-minor-mode-map (kbd "<f4>") 'multi-term-next)
 
 (define-minor-mode my-keys-minor-mode
   "A minor mode so that my key settings override annoying major
