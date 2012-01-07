@@ -51,6 +51,15 @@ keymap.")
 
 (add-hook 'minibuffer-setup-hook 'my-minibuffer-setup-hook)
 
+;; gist configuration
+(require 'gist)
+(require 'gist_local) ;; this just contains the api token
+(setq github-user "bryanwb")
+(setq gist-fetch-url "https://gist.github.com/raw/%d") 
+(setq gist-view-gist t)
+(setq gist-use-curl t)
+
+
 (require 'inf-ruby)
 (autoload 'run-ruby "inf-ruby"
           "Run an inferior Ruby process")
