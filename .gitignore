@@ -5,4 +5,4 @@ emacs.d/.smex-items
 emacs.d/places
 emacs.d/bookmarks
 emacs.d/*_local.el
-
+emacs.d/url/cookies

@@ -63,6 +63,7 @@ keymap.")
 (setq gist-view-gist t)
 (setq gist-use-curl t)
 
+(require 'chef-mode)
 
 (require 'inf-ruby)
 (autoload 'run-ruby "inf-ruby"
@@ -81,3 +82,5 @@ keymap.")
 (add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Vagrantfile$" . ruby-mode))
+
+
