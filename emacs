@@ -84,3 +84,6 @@ keymap.")
 (add-to-list 'auto-mode-alist '("Vagrantfile$" . ruby-mode))
 
 
+(put 'scroll-left 'disabled nil)
+(put 'ido-exit-minibuffer 'disabled nil)
+(put 'downcase-region 'disabled nil)

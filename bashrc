@@ -108,10 +108,18 @@ fi
 
 
 alias emacs="emacs -nw"
+alias scps="scp -i /home/hitman/chef-repo/.chef/id_rsa"
+alias sshS="ssh -i /home/hitman/chef-repo/.chef/id_rsa "
 #alias gnome-terminal="gnome-terminal -x screen"
 
 PATH=$PATH:/var/lib/gems/1.8/bin
 export EDITOR=vi
-export JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk
+
+uname -a | grep 'Ubuntu' 2>&1 > /dev/null
+ret_code=$?
+if [ $ret_code -eq 0 ] ; then
+    gsettings set org.gnome.desktop.interface gtk-key-theme emacs
+fi
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+TERM=xterm-color
