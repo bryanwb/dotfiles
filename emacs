@@ -4,8 +4,8 @@
 (add-to-list 'load-path "~/.emacs.d/")
 (require 'org)
 
-(setq fill-column 79)
-(setq-default auto-fill-function 'do-auto-fill)
+;;(setq fill-column 900)
+;;(setq-default auto-fill-function 'do-auto-fill)
 
 ;; This enables use of the X clipboard for copying and pasting
 (setq x-select-enable-clipboard t)
@@ -39,9 +39,7 @@
 keymap.")
 
 (define-key my-keys-minor-mode-map (kbd "C-l") 'other-window)
-;;(define-key my-keys-minor-mode-map (kbd "<f2>") 'multi-term)
-;;(define-key my-keys-minor-mode-map (kbd "<f3>") 'multi-term-prev)
-;;(define-key my-keys-minor-mode-map (kbd "<f4>") 'multi-term-next)
+(define-key my-keys-minor-mode-map (kbd "<f1>") 'eshell)
 
 (define-minor-mode my-keys-minor-mode
   "A minor mode so that my key settings override annoying major
