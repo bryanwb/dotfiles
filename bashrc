@@ -121,5 +121,5 @@ if [ $ret_code -eq 0 ] ; then
     gsettings set org.gnome.desktop.interface gtk-key-theme emacs
 fi
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 TERM=xterm-color
+eval "$(rbenv init -)"
