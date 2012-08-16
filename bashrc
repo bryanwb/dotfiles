@@ -112,7 +112,6 @@ alias scps="scp -i /home/hitman/chef-repo/.chef/id_rsa"
 alias sshS="ssh -i /home/hitman/chef-repo/.chef/id_rsa "
 #alias gnome-terminal="gnome-terminal -x screen"
 
-PATH=$PATH:/var/lib/gems/1.8/bin
 export EDITOR=vi
 
 uname -a | grep 'Ubuntu' 2>&1 > /dev/null
