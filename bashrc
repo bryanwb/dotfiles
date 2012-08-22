@@ -108,9 +108,9 @@ fi
 
 
 alias emacs="emacs -nw"
-alias scps="scp -i /home/hitman/chef-repo/.chef/id_rsa"
-alias sshS="ssh -i /home/hitman/chef-repo/.chef/id_rsa "
-#alias gnome-terminal="gnome-terminal -x screen"
+alias scps="scp -i ~/.chef/id_rsa"
+alias sshS="ssh -i ~/.chef/id_rsa "
+alias b="bundle exec"
 
 export EDITOR=vi
 
@@ -121,6 +121,7 @@ if [ $ret_code -eq 0 ] ; then
 fi
 
 TERM=xterm-color
+
 export RBENV_ROOT=/usr/local/rbenv
 export PATH=$RBENV_ROOT/bin:$PATH
 eval "$(rbenv init -)"
