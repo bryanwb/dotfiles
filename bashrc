@@ -110,6 +110,7 @@ fi
 alias emacs="emacs -nw"
 alias scps="scp -i /home/hitman/chef-repo/.chef/id_rsa"
 alias sshS="ssh -i /home/hitman/chef-repo/.chef/id_rsa "
+alias b="bundle exec"
 #alias gnome-terminal="gnome-terminal -x screen"
 
 export EDITOR=vi
