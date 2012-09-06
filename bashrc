@@ -122,6 +122,7 @@ if [ $ret_code -eq 0 ] ; then
 fi
 
 TERM=xterm-color
+
 export RBENV_ROOT=/usr/local/rbenv
 export PATH=$RBENV_ROOT/bin:$PATH
 eval "$(rbenv init -)"

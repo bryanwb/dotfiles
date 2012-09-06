@@ -55,7 +55,7 @@ keymap.")
 
 ;; gist configuration
 (require 'gist)
-(require 'gist_local) ;; this just contains the api token
+(if (file-exists-p "~/.emacs.d/gist_local.el") (require 'gist_local)) ;; this just contains the api token
 (setq github-user "bryanwb")
 (setq gist-fetch-url "https://gist.github.com/raw/%d") 
 (setq gist-view-gist t)
@@ -83,7 +83,19 @@ keymap.")
 (add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Vagrantfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Berksfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Kitchenfile$" . ruby-mode))
+(require 'ruby-block)
+(ruby-block-mode t)
 
+;;MARKDOWN
+(autoload 'markdown-mode "markdown-mode.el"
+  "Major mode for editing Markdown files" t)
+(setq auto-mode-alist (cons '("\\.md" . markdown-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.markdown" . markdown-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.text" . markdown-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.seed" . conf-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.erb" . conf-mode) auto-mode-alist))
 
 (put 'scroll-left 'disabled nil)
 (put 'ido-exit-minibuffer 'disabled nil)
