@@ -64,7 +64,7 @@
 (defvar chef-use-bundler t
   "Use `bundle exec knife' if Gemfile exists")
 
-(defvar chef-use-rvm t
+(defvar chef-use-rvm nil
   "If non-nil, require rvm.el and call rvm-activate-corresponding-ruby on chef repo root before calling knife")
 
 (defvar chef-mode-map (make-sparse-keymap)
