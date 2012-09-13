@@ -4,3 +4,4 @@
 
 [core]
 	editor = vim
+	excludesfile = /Users/kimberlydeni/.gitignore_global
