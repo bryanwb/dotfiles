@@ -113,7 +113,7 @@ alias sshS="ssh -i /home/hitman/chef-repo/.chef/id_rsa "
 alias b="bundle exec"
 #alias gnome-terminal="gnome-terminal -x screen"
 
-export EDITOR=emacs
+export EDITOR=mg
 
 uname -a | grep 'Ubuntu' 2>&1 > /dev/null
 ret_code=$?

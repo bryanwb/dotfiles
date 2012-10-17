@@ -3,5 +3,5 @@
 	email = bryan.berry@gmail.com
 
 [core]
-	editor =  emacs
+	editor =  mg
 	excludesfile = ~/.gitignore_global
