@@ -115,11 +115,11 @@ alias b="bundle exec"
 
 export EDITOR=mg
 
-uname -a | grep 'Ubuntu' 2>&1 > /dev/null
-ret_code=$?
-if [ $ret_code -eq 0 ] ; then
-   gsettings set org.gnome.desktop.interface gtk-key-theme "Emacs"
-fi
+#uname -a | grep 'Ubuntu' 2>&1 > /dev/null
+#ret_code=$?
+#if [ $ret_code -eq 0 ] ; then
+#   gsettings set org.gnome.desktop.interface gtk-key-theme "Emacs"
+#fi
 
 TERM=xterm-color
 
