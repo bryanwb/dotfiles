@@ -123,8 +123,6 @@ fi
 
 TERM=xterm-color
 
-export RBENV_ROOT=/usr/local/rbenv
-export PATH=$RBENV_ROOT/bin:$PATH
-eval "$(rbenv init -)"
-
 alias tn='tmux new -s "$(basename `pwd`)" || tmux at -t "$(basename `pwd`)"'
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
