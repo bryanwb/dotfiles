@@ -36,7 +36,7 @@
   )
 
 ;; this is for magit
-(global-set-key (kbd "M-s M-s") 'magit-status)
+(global-set-key (kbd "M-a") 'magit-status)
 
 ;; this is the emacs starter kis
 (require 'package)
