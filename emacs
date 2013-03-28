@@ -35,6 +35,9 @@
   (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
   )
 
+;; this is for magit
+(global-set-key (kbd "M-s M-s") 'magit-status)
+
 ;; this is the emacs starter kis
 (require 'package)
 (add-to-list 'package-archives
