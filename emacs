@@ -3,8 +3,12 @@
 
 (add-to-list 'load-path "~/.emacs.d/")
 (require 'org)
+(require 'uniquify)
+;;(add-to-list 'load-path "~/.emacs.d/emacs-elixir")
+;;(require 'elixir-mode-setup)
+;;(elixir-mode-setup)
 
-;;(setq fill-column 900)
+(setq-default fill-column 100)
 ;;(setq-default auto-fill-function 'do-auto-fill)
 
 ;; This enables use of the X clipboard for copying and pasting
@@ -35,14 +39,22 @@
   (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
   )
 
+
 ;; this is for magit
+(add-to-list 'load-path "~/.emacs.d/magit")
+(require 'magit)
 (global-set-key (kbd "M-a") 'magit-status)
 
 ;; this is the emacs starter kis
 (require 'package)
 (add-to-list 'package-archives
+             '("elpa" . "http://tromey.com/elpa/"))
+(add-to-list 'package-archives
 '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives
+  '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-initialize)
+
 
 (defvar my-keys-minor-mode-map (make-keymap) "my-keys-minor-mode
 keymap.")
@@ -62,25 +74,11 @@ keymap.")
 
 (add-hook 'minibuffer-setup-hook 'my-minibuffer-setup-hook)
 
-;; gist configuration
-(require 'gist)
-(if (file-exists-p "~/.emacs.d/gist_local.el") (require 'gist_local)) ;; this just contains the api token
-(setq github-user "bryanwb")
-(setq gist-fetch-url "https://gist.github.com/raw/%d") 
-(setq gist-view-gist t)
-(setq gist-use-curl t)
+;;(add-hook 'ruby-mode-hook
+;;          '(lambda ()
+;;          (inf-ruby-keys)
+;;          ))
 
-(require 'chef-mode)
-
-(require 'inf-ruby)
-(autoload 'run-ruby "inf-ruby"
-          "Run an inferior Ruby process")
-(autoload 'inf-ruby-keys "inf-ruby"
-          "Set local key defs for inf-ruby in ruby-mode")
-(add-hook 'ruby-mode-hook
-          '(lambda ()
-          (inf-ruby-keys)
-          ))
 
 (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.gemspec$" . ruby-mode))
@@ -95,8 +93,11 @@ keymap.")
 (add-to-list 'auto-mode-alist '("Berksfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Thorfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Kitchenfile$" . ruby-mode))
-(require 'ruby-block)
-(ruby-block-mode t)
+;; (require 'ruby-block)
+;; (ruby-block-mode t)
+
+(add-to-list 'load-path "~/.emacs.d/emacs-pry")
+(require 'pry)
 
 ;;MARKDOWN
 (autoload 'markdown-mode "markdown-mode.el"
@@ -110,3 +111,79 @@ keymap.")
 (put 'scroll-left 'disabled nil)
 (put 'ido-exit-minibuffer 'disabled nil)
 (put 'downcase-region 'disabled nil)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(frame-background-mode (quote dark))
+ '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+(progn
+  (ido-mode t)
+  (setq ido-enable-flex-matching t)
+
+  (menu-bar-mode -1)
+  (when (fboundp 'tool-bar-mode)
+    (tool-bar-mode -1))
+  (when (fboundp 'scroll-bar-mode)
+    (scroll-bar-mode -1))
+
+  (require 'uniquify)
+  (setq uniquify-buffer-name-style 'forward)
+
+  (require 'saveplace)
+  (setq-default save-place t)
+
+  (global-set-key (kbd "M-/") 'hippie-expand)
+  (global-set-key (kbd "C-x C-b") 'ibuffer)
+
+  (global-set-key (kbd "C-s") 'isearch-forward-regexp)
+  (global-set-key (kbd "C-r") 'isearch-backward-regexp)
+  (global-set-key (kbd "C-M-s") 'isearch-forward)
+  (global-set-key (kbd "C-M-r") 'isearch-backward)
+
+  (show-paren-mode 1)
+  (setq-default indent-tabs-mode nil)
+  (setq x-select-enable-clipboard t
+        x-select-enable-primary t
+        save-interprogram-paste-before-kill t
+        apropos-do-all t
+        mouse-yank-at-point t
+        save-place-file (concat user-emacs-directory "places")
+        backup-directory-alist `(("." . ,(concat user-emacs-directory
+                                                 "backups")))))
+
+(require 'tramp)
+(require 'whitespace)
+    
+(setq whitespace-style '(face tabs trailing lines-tail))
+
+    
+   
+;; face for long lines' tails
+(set-face-attribute 'whitespace-line nil
+                    :background "red1"
+                    :foreground "yellow"
+                    :weight 'bold)
+
+;; face for Tabs
+(set-face-attribute 'whitespace-tab nil
+                    :background "red1"
+                    :foreground "yellow"
+                    :weight 'bold)
+
+(setq whitespace-line-column 200)
+
+(add-hook 'python-mode-hook 'whitespace-mode)
+(add-hook 'ruby-mode-hook 'whitespace-mode)
+;;(add-hook 'ruby-mode-hook 'ruby-electric-mode)
+
+;;(add-hook 'dired-load-hook
+;;            (function (lambda () (load "dired-plus"))))
