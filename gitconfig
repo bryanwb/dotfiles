@@ -1,9 +1,9 @@
 [user]
-	name = Bryan Berry
+	name = bryanwb
 	email = bryan.berry@gmail.com
 
 [core]
 	editor =  mg
 	excludesfile = ~/.gitignore_global
-[remote "origin"]
-	fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
+#[remote "origin"]
+	#fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
