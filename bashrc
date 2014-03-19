@@ -125,4 +125,15 @@ TERM=xterm-color
 
 alias tn='tmux new -s "$(basename `pwd`)" || tmux at -t "$(basename `pwd`)"'
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_51.jdk/Contents/Home
+export GRADLE_HOME=/usr/local/gradle-1.11/
+export M2_HOME=/usr/local/maven
+export EC2_HOME=/usr/local/Library/LinkedKegs/ec2-api-tools/libexec/
+#alias node="env NODE_NO_READLINE=1 rlwrap node"
+alias c=cyclecloud
+
+alias vagrant=/usr/bin/vagrant
+
+if [ -e ~/.clenv/current ] ; then
+   source ~/.clenv/current
+fi
