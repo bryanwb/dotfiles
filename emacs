@@ -1,12 +1,7 @@
 ;; This is an emacs file I created to customize emacs
 ;; The settings should take effect on emacs start-up
 
-(add-to-list 'load-path "~/.emacs.d/")
 (require 'org)
-(require 'uniquify)
-;;(add-to-list 'load-path "~/.emacs.d/emacs-elixir")
-;;(require 'elixir-mode-setup)
-;;(elixir-mode-setup)
 
 (setq-default fill-column 100)
 ;;(setq-default auto-fill-function 'do-auto-fill)
@@ -41,8 +36,6 @@
 
 
 ;; this is for magit
-(add-to-list 'load-path "~/.emacs.d/magit")
-(require 'magit)
 (global-set-key (kbd "M-a") 'magit-status)
 
 ;; this is the emacs starter kis
@@ -96,8 +89,8 @@ keymap.")
 ;; (require 'ruby-block)
 ;; (ruby-block-mode t)
 
-(add-to-list 'load-path "~/.emacs.d/emacs-pry")
-(require 'pry)
+;;(add-to-list 'load-path "~/.emacs.d/emacs-pry")
+;;(require 'pry)
 
 ;;MARKDOWN
 (autoload 'markdown-mode "markdown-mode.el"
@@ -117,13 +110,22 @@ keymap.")
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(frame-background-mode (quote dark))
- '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
+ '(python-indent-offset 2)
+ '(python-shell-interpreter "ipython"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
+
+(require 'ido-vertical-mode)
+(ido-mode 1)
+(ido-vertical-mode 1)
 
 (progn
   (ido-mode t)
@@ -135,8 +137,8 @@ keymap.")
   (when (fboundp 'scroll-bar-mode)
     (scroll-bar-mode -1))
 
-  (require 'uniquify)
-  (setq uniquify-buffer-name-style 'forward)
+;;  (require 'uniquify)
+;;  (setq uniquify-buffer-name-style 'forward)
 
   (require 'saveplace)
   (setq-default save-place t)
@@ -160,12 +162,8 @@ keymap.")
         backup-directory-alist `(("." . ,(concat user-emacs-directory
                                                  "backups")))))
 
-(require 'tramp)
 (require 'whitespace)
-    
 (setq whitespace-style '(face tabs trailing lines-tail))
-
-    
    
 ;; face for long lines' tails
 (set-face-attribute 'whitespace-line nil
@@ -185,13 +183,48 @@ keymap.")
 (add-hook 'ruby-mode-hook 'whitespace-mode)
 ;;(add-hook 'ruby-mode-hook 'ruby-electric-mode)
 
-;;(add-hook 'dired-load-hook
-;;            (function (lambda () (load "dired-plus"))))
-
 (defun ns-get-pasteboard ()
       "Returns the value of the pasteboard, or nil for unsupported formats."
      (condition-case nil
          (ns-get-selection-internal 'CLIPBOARD)
        (quit nil)))
 
-n-int
+;; gets rid of message "ls does not support --dired; see `dired-use-ls-dired' for more details." on os x
+(when (eq system-type 'darwin)
+  (require 'ls-lisp)
+    (setq ls-lisp-use-insert-directory-program nil))
+
+
+(defun visit-term-buffer ()
+       "Create or visit a terminal buffer."
+       (interactive)
+       (if (not (get-buffer "*ansi-term*"))
+           (progn
+                (split-window-sensibly (selected-window))
+                (other-window 1)
+                (ansi-term (getenv "SHELL")))
+                (switch-to-buffer-other-window "*ansi-term*")))
+
+(global-set-key (kbd "C-c t") 'visit-term-buffer)
+
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
+
+(require 'engine-mode)
+(engine-mode t)
+(defengine github
+  "https://github.com/search?ref=simplesearch&q=%s")
+  
+(defengine google
+  "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s"
+  "g")   
+
+;; python config
+(elpy-enable)
+(require 'yasnippet)
+(yas-global-mode 1)
+
+;; this is the only way to change the offset, customizing it otherwise
+;; doesn't work
+(add-hook 'python-mode-hook
+   (function (lambda ()                  
+      (setq python-indent-offset 2))))
