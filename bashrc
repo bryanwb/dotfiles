@@ -49,21 +49,19 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
+# this seems to work well w/ ansi-term
+export PS1='$ '
+
 unset color_prompt force_color_prompt
 
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
+# # If this is an xterm set the title to user@host:dir
+# case "$TERM" in
+# xterm*|rxvt*)
+#     PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+#     ;;
+# *)
+#     ;;
+# esac
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -102,12 +100,11 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-if [ -f ~/.bash_local ]; then
-    . ~/.bash_local
+if [ -d /usr/local/etc/bash_completion.d ] && ! shopt -oq posix; then
+    . /usr/local/etc/bash_completion.d/*
 fi
 
 
-alias emacs="emacs -nw"
 alias scps="scp -i /home/hitman/chef-repo/.chef/id_rsa"
 alias sshS="ssh -i /home/hitman/chef-repo/.chef/id_rsa "
 alias b="bundle exec"
@@ -121,19 +118,78 @@ export EDITOR=mg
 #   gsettings set org.gnome.desktop.interface gtk-key-theme "Emacs"
 #fi
 
-TERM=xterm-color
+TERM=xterm
+#TERM=xterm-color
 
 alias tn='tmux new -s "$(basename `pwd`)" || tmux at -t "$(basename `pwd`)"'
-
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_51.jdk/Contents/Home
-export GRADLE_HOME=/usr/local/gradle-1.11/
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_73.jdk/Contents/Home/
+export GRADLE_HOME=/usr/local/gradle-4.5
 export M2_HOME=/usr/local/maven
 export EC2_HOME=/usr/local/Library/LinkedKegs/ec2-api-tools/libexec/
+export SCALA_HOME=/usr/local/Cellar/scala/
+export GOROOT=/usr/local/go
+export GOPATH=~/pr/go
+export GOBIN=$GOPATH/bin
+export PACKER_HOME=/usr/local/packer
 #alias node="env NODE_NO_READLINE=1 rlwrap node"
 alias c=cyclecloud
 
-alias vagrant=/usr/bin/vagrant
+# ansible fw crap
+export DEPARTMENT=CE
+export ANSIBLE_INVENTORY=~/dev/fw/config/inventory.py
+export ANSIBLE_NOCOWS=1
 
-if [ -e ~/.clenv/current ] ; then
-   source ~/.clenv/current
+# alias ssw='source $(which ssw)'
+# ssw load
+
+# no longer using this
+# load vars to connect to docker
+# eval "$(docker-machine env default)"
+
+# this function is needed when using hologram instead of sellsword
+function unset_aws {
+    unset AWS_ACCESS_KEY AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SECRET_KEY
+}
+
+if [ ! -z "$(command -v brew)" ] ; then
+   if [ -f $(brew --prefix)/etc/bash_completion ]; then
+      . $(brew --prefix)/etc/bash_completion
+   fi
 fi
+
+CHEFDK=/opt/chefdk/bin
+export PATH="/Users/hitman/bin:$GOPATH/bin/bin:$CHEFDK:/usr/local/sbin:/usr/local/bin:$PATH"
+
+# needed for gcloud
+export CLOUDSDK_PYTHON_SITEPACKAGES=1
+
+if [ -f $GOPATH/src/github.com/zquestz/s/autocomplete/s-completion.bash ]; then
+    . $GOPATH/src/github.com/zquestz/s/autocomplete/s-completion.bash
+fi
+
+# load local secrets
+if [ -e ~/.bash_local ] ; then
+   source ~/.bash_local
+fi     
+
+export GTAGSLIBPATH=$HOME/.gtags/
+
+
+cc-rdp () {
+    # create an RDP tunnel
+    bastion="${1}"
+    windows="${2}"
+    ssh -A -t cyclecloud@"${bastion}"  -L 33890:"${windows}":3389
+    exit_code=$?
+    if [ ${exit_code} = 0 ] ; then
+        echo "Use localhost:33890 to connect to ${windows}"
+    else
+        echo "Failed to set up rdp tunnel to ${windows}"
+        exit ${exit_code}
+    fi
+}
+
+docker-clean-containers () {
+    docker ps -aq --no-trunc -f status=exited | xargs docker rm
+}
+
