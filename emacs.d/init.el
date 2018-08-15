@@ -778,39 +778,6 @@ _s_: bash strict mode
 ;;     (add-hook 'js-mode-hook #'indium-interaction-mode)
 ;;     (define-key indium-interaction-mode-map (kbd "C-c C-c") 'indium-eval-region)))
 
-(defun setup-tide-mode ()
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (with-eval-after-load 'flycheck
-    (flycheck-add-mode 'typescript-tslint 'typescript-mode))
-  (tide-hl-identifier-mode +1))
-
-;; typescript setup
-(use-package tide
-  :ensure t
-  :config
-  (progn
-    (company-mode +1)
-    ;; aligns annotation to the right hand side
-    (setq company-tooltip-align-annotations t)
-
-    (add-hook 'typescript-mode-hook #'setup-tide-mode)
-    (add-hook 'typescript-mode-hook #'setup-tide-mode)
-    ;; aligns annotation to the right hand side
-    (setq company-tooltip-align-annotations t)
-    (setq tide-format-options '(:indentSize 2 :tabSize 2 :insertSpaceAfterFunctionKeywordForAnonymousFunctions t :placeOpenBraceOnNewLineForFunctions nil))))
-
-;; formats the buffer before saving
-;; (add-hook 'before-save-hook 'tide-format-before-save)
-
-;; (add-hook 'typescript-mode-hook #'setup-tide-mode)
-
-;; ;; format options
-;; (setq tide-format-options '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions t :placeOpenBraceOnNewLineForFunctions nil))
-
 
 ;; adds /usr/local/bin to our PATH in eshell
 (add-to-list 'exec-path "/usr/local/bin")
@@ -906,6 +873,7 @@ SIZE :
   :ensure t
   :init (add-hook 'after-init-hook 'global-company-mode)
   :config
+  (global-set-key "\t" 'company-complete-common)
   (use-package company-irony :ensure t :defer t)
   (use-package company-c-headers :ensure t :defer t
     :config
@@ -920,6 +888,51 @@ SIZE :
 	)
   (define-key c-mode-map  [(tab)] 'company-complete)
   )
+
+
+;; (defun setup-tide-mode ()
+;;   (interactive)
+;;   (tide-setup)
+;;   (flycheck-mode +1)
+;;   (setq flycheck-check-syntax-automatically '(save mode-enabled))
+;;   (eldoc-mode +1)
+;;   (with-eval-after-load 'flycheck
+;;     (flycheck-add-mode 'typescript-tslint 'typescript-mode))
+;;   (tide-hl-identifier-mode +1))
+
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1))
+
+;; typescript setup
+(use-package tide
+  :ensure t
+  :config
+  (progn
+    (company-mode +1)
+    ;; aligns annotation to the right hand side
+    (setq company-tooltip-align-annotations t)
+    (setq tide-format-options '(:indentSize 2 :tabSize 2 :insertSpaceAfterFunctionKeywordForAnonymousFunctions t :placeOpenBraceOnNewLineForFunctions nil))
+    (add-hook 'typescript-mode-hook #'setup-tide-mode)
+    (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
+  ))
+
+;; formats the buffer before saving
+;; (add-hook 'before-save-hook 'tide-format-before-save)
+
+
+
+;; ;; format options
+;; (setq tide-format-options '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions t :placeOpenBraceOnNewLineForFunctions nil))
+
 
 ;; C, C++ programming
 ;; taken from https://tuhdo.github.io/c-ide.html
