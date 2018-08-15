@@ -720,6 +720,7 @@ _s_: bash strict mode
     (with-eval-after-load 'flycheck
       (flycheck-add-mode 'typescript-tslint 'web-mode))))
 
+(add-to-list 'exec-path "/home/hitman/.config/yarn/global/node_modules/.bin")
 
 ;; (defun my-company-transformer (candidates)
 ;;   (let ((completion-ignore-case t))

@@ -157,11 +157,10 @@ if [ ! -z "$(command -v brew)" ] ; then
    fi
 fi
 
-CHEFDK=/opt/chefdk/bin
 export PATH="/Users/hitman/bin:$GOPATH/bin/bin:$CHEFDK:/usr/local/sbin:/usr/local/bin:$PATH"
 
-# needed for gcloud
-export CLOUDSDK_PYTHON_SITEPACKAGES=1
+YARN_GLOBAL="~/.config/yarn/global/node_modules/.bin"
+export PATH="$YARN_GLOBAL:$PATH"
 
 if [ -f $GOPATH/src/github.com/zquestz/s/autocomplete/s-completion.bash ]; then
     . $GOPATH/src/github.com/zquestz/s/autocomplete/s-completion.bash
