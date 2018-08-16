@@ -653,7 +653,7 @@ _s_: bash strict mode
  '(imenu-anywhere-buffer-filter-functions (quote (imenu-anywhere-same-project-p)))
  '(package-selected-packages
    (quote
-    (irony-eldoc flycheck-irony company-irony irony lsp-ui company-lsp lsp-mode lsp-javascript-typescript magit dockerfile-mode rjsx-mode rjsx indium js-comint helm-dash flymake-solidity solidity-mode go-mode projectile ivy buffer-move dracula-theme pyvenv ace-window atom-one-dark atom-dark-theme atom-one-dark-theme nov imenu-anywhere counsel-dash rubocop mmm-jinja2 groovy-mode company meghanada ivy-gitlab gitlab mvn dired-quick-sort hydra dired+ lorem-ipsum hc-zenburn-theme zenburn-theme swiper all-the-icons-ivy org org-brain undo-tree avy f s beacon vhdl-tools company-c-headers web-mode company-tern tern-auto-complete nodejs-repl tern mmm-mode better-shell py-autopep8 intero toml-mode haskell-mode ac-haskell-process tide dired-hacks-utils yaml-mode use-package typescript tablist sudo-edit spinner solarized-theme smart-mode-line-powerline-theme seq restclient queue powershell pdf-tools ox-pandoc org-present org-mobile-sync multi-eshell markdown-mode magit-gh-pulls know-your-http-well key-seq json-mode jinja2-mode ivy-hydra inf-ruby ido-vertical-mode helm-projectile helm-org-rifle helm-mt helm-gitlab helm-ag hcl-mode gradle-mode golint go-eldoc go-autocomplete gist ggtags flycheck flx-ido exec-path-from-shell eshell-manual elpy dumb-jump counsel-projectile clojure-mode cl-lib-highlight ansible-doc ag)))
+    (flymake-json smart-mode-line-powerline-theme js2-mode irony-eldoc flycheck-irony company-irony irony lsp-ui company-lsp lsp-mode lsp-javascript-typescript magit dockerfile-mode rjsx-mode rjsx indium js-comint helm-dash flymake-solidity solidity-mode go-mode projectile ivy buffer-move dracula-theme pyvenv ace-window atom-one-dark atom-dark-theme atom-one-dark-theme nov imenu-anywhere counsel-dash rubocop mmm-jinja2 groovy-mode company meghanada ivy-gitlab gitlab mvn dired-quick-sort hydra dired+ lorem-ipsum hc-zenburn-theme zenburn-theme swiper all-the-icons-ivy org org-brain undo-tree avy f s beacon vhdl-tools company-c-headers web-mode company-tern tern-auto-complete nodejs-repl tern mmm-mode better-shell py-autopep8 intero toml-mode haskell-mode ac-haskell-process tide dired-hacks-utils yaml-mode use-package typescript tablist sudo-edit spinner solarized-theme seq restclient queue powershell pdf-tools ox-pandoc org-present org-mobile-sync multi-eshell markdown-mode magit-gh-pulls know-your-http-well key-seq json-mode jinja2-mode ivy-hydra inf-ruby ido-vertical-mode helm-projectile helm-org-rifle helm-mt helm-gitlab helm-ag hcl-mode gradle-mode golint go-eldoc go-autocomplete gist ggtags flycheck flx-ido exec-path-from-shell eshell-manual elpy dumb-jump counsel-projectile clojure-mode cl-lib-highlight ansible-doc ag)))
  '(typescript-indent-level 2))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -662,65 +662,6 @@ _s_: bash strict mode
  ;; If there is more than one, they won't work right.
  '(variable-pitch ((t (:height 1.5 :family "Sans Serif")))))
 
-
-
-;; (use-package nodejs-repl
-;;   :ensure t
-;;   :config
-;;   (progn
-;;     (add-hook 'js2-mode-hook
-;;           (lambda ()
-;;             (define-key nodejs-repl-mode-map (kbd "C-x C-e") 'nodejs-repl-send-last-expression)
-;;             (define-key nodejs-repl-mode-map (kbd "C-c C-j") 'nodejs-repl-send-line)
-;;             (define-key nodejs-repl-mode-map (kbd "C-c C-r") 'nodejs-repl-send-region)
-;;             (define-key nodejs-repl-mode-map (kbd "C-c C-l") 'nodejs-repl-load-file)
-;;             (define-key nodejs-repl-mode-map (kbd "C-c C-z") 'nodejs-repl-switch-to-repl)))))
-
-;; (use-package js-comint
-;;    :ensure t
-;;    :config
-;;    (progn
-;;      (add-hook 'js2-mode-hook
-;;           (lambda ()
-;;             (local-set-key (kbd "C-x C-e") 'js-send-last-sexp)
-;;             (local-set-key (kbd "C-M-x") 'js-send-last-sexp-and-go)
-;;             (local-set-key (kbd "C-c b") 'js-send-buffer)
-;;             (local-set-key (kbd "C-c C-b") 'js-send-buffer-and-go)
-;;             (local-set-key (kbd "C-c l") 'js-load-file-and-go)))))
-
-
-;; just use typescript please
-;; (require 'init-javascript)
-
-(use-package js2-mode
-  :ensure t
-  :config
-  (progn
-    (add-hook 'js2-mode-hook
-              (lambda ()
-                (progn
-                  (setq js2-strict-missing-semi-warning nil)
-                  (setq js2-include-node-externs t)
-                  (setq js2-basic-offset 2))))))
-
-(add-to-list 'auto-mode-alist '("\\.js" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.html" . web-mode))
-(add-to-list 'interpreter-mode-alist '("node" . js2-mode))
-
-(use-package web-mode
-  :ensure t
-  :config
-  (progn
-    (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
-    (add-hook 'web-mode-hook
-              (lambda ()
-                (when (string-equal "tsx" (file-name-extension buffer-file-name))
-                  (setup-tide-mode))))
-    ;; enable typescript-tslint checker
-    (with-eval-after-load 'flycheck
-      (flycheck-add-mode 'typescript-tslint 'web-mode))))
-
-(add-to-list 'exec-path "/home/hitman/.config/yarn/global/node_modules/.bin")
 
 ;; (defun my-company-transformer (candidates)
 ;;   (let ((completion-ignore-case t))
@@ -879,7 +820,7 @@ SIZE :
   (use-package company-c-headers :ensure t :defer t
     :config
     (add-to-list 'company-c-headers-path-system "/usr/include"))
-  (setq company-idle-delay              nil
+  (setq company-idle-delay              2
 	company-minimum-prefix-length   2
 	company-show-numbers            t
 	company-tooltip-limit           20
@@ -908,6 +849,7 @@ SIZE :
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
   (eldoc-mode +1)
   (tide-hl-identifier-mode +1)
+  (setq tide-format-options '(:indentSize 2 :tabSize 2 :insertSpaceAfterFunctionKeywordForAnonymousFunctions t :placeOpenBraceOnNewLineForFunctions nil))
   ;; company is an optional dependency. You have to
   ;; install it separately via package-install
   ;; `M-x package-install [ret] company`
@@ -921,10 +863,51 @@ SIZE :
     (company-mode +1)
     ;; aligns annotation to the right hand side
     (setq company-tooltip-align-annotations t)
-    (setq tide-format-options '(:indentSize 2 :tabSize 2 :insertSpaceAfterFunctionKeywordForAnonymousFunctions t :placeOpenBraceOnNewLineForFunctions nil))
     (add-hook 'typescript-mode-hook #'setup-tide-mode)
     (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
   ))
+
+;; use typescript with js2-mode
+(use-package js2-mode
+  :ensure t
+  :config
+  (progn
+    (add-hook 'js2-mode-hook #'setup-tide-mode)
+    ;; configure javascript-tide checker to run after your default javascript checker
+    (setq js2-basic-offset 2)
+    (flycheck-add-next-checker 'javascript-eslint 'javascript-tide 'append)
+    (add-to-list 'auto-mode-alist '("\\.js" . js2-mode))))
+
+
+;;(add-to-list 'interpreter-mode-alist '("node" . js2-mode))
+
+;; use json-mode from https://github.com/joshwnj/json-mode for json instead of js-mode or js2-mode
+(use-package json-mode
+  :ensure t
+  :config
+  (progn
+    (flycheck-add-mode 'json-jsonlint 'json-mode)
+    (add-hook 'json-mode-hook 'flycheck-mode)
+    (add-to-list 'auto-mode-alist '("\\.json" . json-mode))))
+
+(use-package web-mode
+  :ensure t
+  :config
+  (progn
+    (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+    (add-hook 'web-mode-hook
+              (lambda ()
+                (setq web-mode-code-indent-offset 2)
+                (when (string-equal "tsx" (file-name-extension buffer-file-name))
+                  (setup-tide-mode))))
+    ;; enable typescript-tslint checker
+    (with-eval-after-load 'flycheck
+      (flycheck-add-mode 'typescript-tslint 'web-mode))))
+
+;; (add-to-list 'auto-mode-alist '("\\.html" . web-mode))
+
+(add-to-list 'exec-path "/home/hitman/.config/yarn/global/node_modules/.bin")
+
 
 ;; formats the buffer before saving
 ;; (add-hook 'before-save-hook 'tide-format-before-save)
