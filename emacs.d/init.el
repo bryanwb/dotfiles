@@ -168,7 +168,7 @@
 	company-minimum-prefix-length   2
 	company-show-numbers            t
 	company-tooltip-limit           20
-	company-dabbrev-downcase        nil        
+	company-dabbrev-downcase        nil
 	)
   )
 
@@ -287,25 +287,6 @@
 (put 'scroll-left 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
-;; (custom-set-variables
-;;  ;; custom-set-variables was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  '(frame-background-mode (quote dark))
-;;  '(gh-profile-alist
-;;    (quote
-;;     (("github" :url "https://api.github.fierylab.com" :remote-regexp "^\\(?:git@github\\.fierylab\\.com:\\|\\(?:git\\|https?\\|ssh\\)://.*@?github\\.fierylab\\.com/\\)\\(.*\\)/\\(.*\\)\\(?:\\.git\\)?"))))
-;;  '(inf-ruby-default-implementation "pry")
-;;  '(python-indent-offset 4)
-;;  '(python-shell-interpreter "ipython"))
-;; (custom-set-faces
-;;  ;; custom-set-faces was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  '(magit-item-highlight ((t nil))))
-
 ;; turn off all menus
 (progn
   (menu-bar-mode -1)
@@ -352,27 +333,6 @@
 ;; https://github.com/suvayu/.emacs.d/blob/master/org-mode-config.el#L96
 (setcdr (assoc "l" org-structure-template-alist)
         '("#+NAME: \n#+BEGIN_LOG\n?\n#+END_LOG"))
-
-
-;; whitespace-mode just gets in the way at this point
-;; (require 'whitespace)
-;; (setq whitespace-style '(face tabs trailing lines-tail))
-   
-;; ;; face for long lines' tails
-;; (set-face-attribute 'whitespace-line nil
-;;                     :background "red1"
-;;                     :foreground "yellow"
-;;                     :weight 'bold)
-
-;; ;; face for Tabs
-;; (set-face-attribute 'whitespace-tab nil
-;;                     :background "red1"
-;;                     :foreground "yellow"
-;;                     :weight 'bold)
-
-;; (setq whitespace-line-column 200)
-
-;; (add-hook 'python-mode-hook 'whitespace-mode)
 
 
 (defun ns-get-pasteboard ()
@@ -473,14 +433,6 @@
 ;; (global-set-key (kbd "C-c b") 'bookmark-set)
 ;; (global-set-key (kbd "C-c l") 'bookmark-bmenu-list)
 (global-set-key (kbd "M-t") 'revert-buffer)
-
-;; w3m settings
-;; (add-to-list 'load-path "~/.emacs.d/vendor/w3m/")
-;; (require 'w3m-load)
-;; (setq w3m-search-engine-alist '(("wikipedia" "https://en.wikipedia.org/wiki/Special:Search/%s")
-;;                                 ("duckduckgo" "https://duckduckgo.com/lite?q=%s")
-;;                                 ("duckduckgo" "https://duckduckgo.com/lite" nil "q=%s")))
-;; (setq w3m-search-default-engine "duckduckgo")
 
 (defun term-toggle-mode ()
   (interactive)
@@ -675,55 +627,6 @@ _s_: bash strict mode
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(variable-pitch ((t (:height 1.5 :family "Sans Serif")))))
-
-
-;; (defun my-company-transformer (candidates)
-;;   (let ((completion-ignore-case t))
-;;     (all-completions (company-grab-symbol) candidates)))
-
-;; (defun my-js-hook nil
-;;   (make-local-variable 'company-transformers)
-;;   (push 'my-company-transformer company-transformers))
-
-;; (use-package lsp-mode
-;;   :ensure t
-;;   :config
-
-;;   ;; make sure we have lsp-imenu everywhere we have LSP
-;;   (require 'lsp-imenu)
-;;   (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)  
-;;   ;; lsp extras
-;;   (use-package lsp-ui
-;;     :ensure t
-;;     :config
-;;     (setq lsp-ui-sideline-ignore-duplicate t)
-;;     (add-hook 'lsp-mode-hook 'lsp-ui-mode))
-
-;;   (use-package company-lsp
-;;     :config
-;;     (push 'company-lsp company-backends)))
-
-;; (use-package lsp-javascript-typescript
-;;   :ensure t
-;;   :config
-;;   (progn
-;;     (company-mode +1)
-;;     (require 'lsp-mode)
-;;     (add-hook 'js2-mode-hook #'lsp-javascript-typescript-enable)
-;;     (add-hook 'typescript-mode-hook #'lsp-javascript-typescript-enable) ;; for typescript support
-;;     (add-hook 'js3-mode-hook #'lsp-javascript-typescript-enable) ;; for js3-mode support
-;;     (add-hook 'rjsx-mode #'lsp-javascript-typescript-enable) ;; for rjsx-mode support
-;;     (add-hook 'js2-mode-hook 'my-js-hook)))
-
-;; (use-package company-tern
-;;   :ensure t
-;;   :config
-;;   (progn
-;;     (add-to-list 'company-backends 'company-tern)
-;;     (add-hook 'js2-mode-hook (lambda ()
-;;                                (tern-mode)
-;;                                (company-mode)))))
-
 
 ;; ;; use indium instead of nodejs-repl
 ;; ;; http://indium.readthedocs.io/en/latest/index.html
@@ -929,40 +832,6 @@ SIZE :
 
 (add-to-list 'exec-path "/home/hitman/.config/yarn/global/node_modules/.bin")
 
-
-;; formats the buffer before saving
-;; (add-hook 'before-save-hook 'tide-format-before-save)
-
-
-
-;; ;; format options
-;; (setq tide-format-options '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions t :placeOpenBraceOnNewLineForFunctions nil))
-
-
-;; C, C++ programming
-;; taken from https://tuhdo.github.io/c-ide.html
-
-;; (use-package company-c-headers
-;;   :ensure t)
-
-
-;; (require 'ggtags)
-;; (add-hook 'c-mode-hook
-;;           (lambda ()
-;;             (progn
-;;               (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
-;;                 (ggtags-mode 1))
-;;               (require 'company)
-;;               (require 'company-c-headers)
-;;               (company-mode)
-;;               (add-to-list 'company-backends 'company-c-headers)
-;;               (add-to-list 'company-c-headers-path-system "/usr/include")
-;;               (setq company-backends
-;;                     (delete 'company-semantic company-backends))
-;;               (define-key c-mode-map  [(tab)] 'company-complete)
-;;               )))
-
-
 ;; configuration for nand2tetris exercises
 ;; https://github.com/CestDiego/nand2tetris.el
 ;; (use-package nand2tetris
@@ -980,18 +849,6 @@ SIZE :
 
 
 ;; (add-to-list 'auto-mode-alist '("\\.hdl$" . nand2tetris-mode))
-
-
-
-
-;; (define-key ggtags-mode-map (kbd "C-c g s") 'ggtags-find-other-symbol)
-;; (define-key ggtags-mode-map (kbd "C-c g h") 'ggtags-view-tag-history)
-;; (define-key ggtags-mode-map (kbd "C-c g r") 'ggtags-find-reference)
-;; (define-key ggtags-mode-map (kbd "C-c g f") 'ggtags-find-file)
-;; (define-key ggtags-mode-map (kbd "C-c g c") 'ggtags-create-tags)
-;; (define-key ggtags-mode-map (kbd "C-c g u") 'ggtags-update-tags)
-
-;; (define-key ggtags-mode-map (kbd "M-,") 'pop-tag-mark)
 
 
 (defun bwb-coderef ()
@@ -1066,13 +923,6 @@ SIZE :
 ;; eshell stuff
 (setenv "JAVA_HOME"
         "/Library/Java/JavaVirtualMachines/jdk1.8.0_73.jdk/Contents/Home")
-
-;; not using, doesn't work w/ cycle_server nor small projects
-;; (use-package meghanada
-;;   :ensure t
-;;   :config
-;;   (progn
-;;     (setq meghanada-maven-path "/usr/local/bin/mvn")))
 
 
 ;; Protect against accident pushes to upstream
@@ -1196,14 +1046,6 @@ Advice to `magit-push-current-to-upstream' triggers this query."
   :config
   (progn
     (load-theme 'dracula t)))
-
-;; (use-package atom-one-dark-theme 
-;;   :ensure t
-;;   :config
-;;   (progn
-;;     (load-theme 'atom-one-dark t)
-;;     (set-default-font 'Inconsolata-12)))
-
 
 (defun eshell-here ()
   "Opens up a new shell in the directory associated with the
