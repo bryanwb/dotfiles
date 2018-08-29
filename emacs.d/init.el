@@ -844,7 +844,9 @@ SIZE :
 
 (defun setup-tide-mode ()
   (interactive)
+  ;;  (setq tide-tsserver-process-environment '("TSS_LOG=-level verbose -file /tmp/tss.log"))
   (tide-setup)
+  (setq tide-tsserver-executable "node_modules/typescript/bin/tsserver")
   (flycheck-mode +1)
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
   (eldoc-mode +1)
