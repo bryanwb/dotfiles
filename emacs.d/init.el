@@ -158,13 +158,19 @@
   :ensure t)
 
 
+(defun bwb-indent-or-complete ()
+    (interactive)
+    (if (looking-at "\\_>")
+        (company-complete-common)
+      (indent-according-to-mode)))
+
 ;; == company-mode ==
 (use-package company
   :ensure t
   :init (add-hook 'after-init-hook 'global-company-mode)
   :config
-  (global-set-key "\t" 'company-complete-common)
-  (setq company-idle-delay              2
+  (global-set-key "\t" 'bwb-indent-or-complete)
+  (setq company-idle-delay              0
 	company-minimum-prefix-length   2
 	company-show-numbers            t
 	company-tooltip-limit           20
