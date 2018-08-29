@@ -158,6 +158,36 @@
   :ensure t)
 
 
+;; == company-mode ==
+(use-package company
+  :ensure t
+  :init (add-hook 'after-init-hook 'global-company-mode)
+  :config
+  (global-set-key "\t" 'company-complete-common)
+  (setq company-idle-delay              2
+	company-minimum-prefix-length   2
+	company-show-numbers            t
+	company-tooltip-limit           20
+	company-dabbrev-downcase        nil        
+	)
+  )
+
+;; provides completion for elisp
+(with-eval-after-load 'company
+    (add-hook 'emacs-lisp-mode-hook
+        '(lambda ()
+         (require 'company-elisp)
+         (push 'company-elisp company-backends))))
+
+(use-package
+  flycheck
+  :ensure t
+  :init
+  (progn
+    (add-hook 'after-init-hook #'global-flycheck-mode)
+    (setq flycheck-highlighting-mode 'lines)))
+
+
 ;; unfortunately this does not work for me at all
 (use-package ace-window
   :ensure t
@@ -579,26 +609,10 @@ _s_: bash strict mode
             (key-seq-define sh-mode-map "b3" 'hydra-b3bp-menu/body)
             ))
 
-;; turn on auto-complete for the elisp repl
-(defun ielm-auto-complete ()
-  "Enables `auto-complete' support in \\[ielm]."
-  (setq ac-sources '(ac-source-functions
-                     ac-source-variables
-                     ac-source-features
-                     ac-source-symbols
-                     ac-source-words-in-same-mode-buffers))
-  (add-to-list 'ac-modes 'inferior-emacs-lisp-mode)
-  (auto-complete-mode 1))
-(add-hook 'ielm-mode-hook 'ielm-auto-complete)
-
-
 ;; (add-to-list 'load-path "~/.emacs.d/vendor/emacs-gitlab")
 ;; (load "~/.emacs.d/vendor/emacs-gitlab/gitlab.el")
 
 ;;(require 'know-your-http-well)
-
-;; turn on company-mode for elisp
-(add-hook 'emacs-lisp-mode-hook 'company-mode)
 
 (defalias 'cg 'counsel-git)
 (defalias 'cgg 'counsel-git-grep)
@@ -806,30 +820,23 @@ SIZE :
   :ensure t
   :config
   (progn
-    (add-hook 'c-mode-hook 'flycheck-mode)
-    (eval-after-load 'flycheck
-       '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))))
-
-;; == company-mode ==
-(use-package company
-  :ensure t
-  :init (add-hook 'after-init-hook 'global-company-mode)
-  :config
-  (global-set-key "\t" 'company-complete-common)
-  (use-package company-irony :ensure t :defer t)
-  (use-package company-c-headers :ensure t :defer t
-    :config
-    (add-to-list 'company-c-headers-path-system "/usr/include"))
-  (setq company-idle-delay              2
-	company-minimum-prefix-length   2
-	company-show-numbers            t
-	company-tooltip-limit           20
-	company-dabbrev-downcase        nil
-        company-backends '((company-irony company-gtags company-c-headers))
-        
-	)
-  (define-key c-mode-map  [(tab)] 'company-complete)
-  )
+    (add-hook 'c-mode-hook
+              (lambda ()
+                (flycheck-mode)
+                (company-mode)
+                (use-package company-irony :ensure t :defer t)
+                (use-package company-c-headers :ensure t :defer t
+                   :config
+                   (add-to-list 'company-c-headers-path-system "/usr/include"))
+                (require 'company-irony)
+                (require 'company-gtags)
+                (require 'company-c-headers)
+                (define-key c-mode-map  [(tab)] 'company-complete)
+                (push company-backends 'company-irony)
+                (push company-backends 'company-gtags)
+                (push company-backends 'company-c-headers)
+                (eval-after-load 'flycheck
+                  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))))))
 
 
 ;; (defun setup-tide-mode ()
@@ -909,10 +916,12 @@ SIZE :
                 (when (string-equal "jsx" (file-name-extension buffer-file-name))
                   (setup-tide-mode))
                 (when (string-equal "js" (file-name-extension buffer-file-name))
-                  (setup-tide-mode))
-                (with-eval-after-load 'flycheck
-                  (flycheck-add-mode 'typescript-tslint 'web-mode))
-    ))))
+                  (progn
+                    (setup-tide-mode)
+                    (with-eval-after-load 'flycheck
+                      (flycheck-add-mode 'typescript-tslint 'web-mode)
+                      (flycheck-add-mode 'javascript-tide 'web-mode))))))
+    ))
     ;; enable typescript-tslint checker
     
 
