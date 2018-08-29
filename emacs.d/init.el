@@ -1334,3 +1334,18 @@ directory to make multiple eshell windows easier."
 
 ;; only ask once to delete a set of directories
 (setq dired-recursive-deletes 'always)
+
+
+(defvar bwb-timestamp-format "%Y-%m-%dT%H:%M:%SZ"
+  "Format of date to insert with `bjk-timestamp' function
+%Y-%m-%d %H:%M will produce something of the form YYYY-MM-DD HH:MM
+Do C-h f on `format-time-string' for more info")
+
+
+(defun bwb-timestamp ()
+  "Insert a timestamp at the current point.
+Note no attempt to go to beginning of line and no added carriage return.
+Uses `bwb-timestamp-format' for formatting the date/time."
+       (interactive)
+       (insert (format-time-string bwb-timestamp-format (current-time)))
+       )
