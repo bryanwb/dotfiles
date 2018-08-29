@@ -869,19 +869,19 @@ SIZE :
     (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
   ))
 
-;; use typescript with js2-mode
-(use-package js2-mode
-  :ensure t
-  :config
-  (progn
-    (add-hook 'js2-mode-hook #'setup-tide-mode)
-    ;; configure javascript-tide checker to run after your default javascript checker
-    (setq js2-basic-offset 2)
-    (flycheck-add-next-checker 'javascript-eslint 'javascript-tide 'append)
-    (add-to-list 'auto-mode-alist '("\\.js" . js2-mode))))
+;; use web-mode + tide-mode for javascript instead
+;; (use-package js2-mode
+;;   :ensure t
+;;   :config
+;;   (progn
+;;     (add-hook 'js2-mode-hook #'setup-tide-mode)
+;;     ;; configure javascript-tide checker to run after your default javascript checker
+;;     (setq js2-basic-offset 2)
+;;     (flycheck-add-next-checker 'javascript-eslint 'javascript-tide 'append)
+;;     (add-to-list 'auto-mode-alist '("\\.js" . js2-mode))))
 
 
-;;(add-to-list 'interpreter-mode-alist '("node" . js2-mode))
+;; (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
 
 ;; use json-mode from https://github.com/joshwnj/json-mode for json instead of js-mode or js2-mode
 (use-package json-mode
@@ -897,14 +897,24 @@ SIZE :
   :config
   (progn
     (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.js" . web-mode))
+    ;; this magic incantation fixes highlighting of jsx syntax in .js files
+    (setq web-mode-content-types-alist
+          '(("jsx" . "\\.js[x]?\\'")))
     (add-hook 'web-mode-hook
               (lambda ()
                 (setq web-mode-code-indent-offset 2)
                 (when (string-equal "tsx" (file-name-extension buffer-file-name))
-                  (setup-tide-mode))))
+                  (setup-tide-mode))
+                (when (string-equal "jsx" (file-name-extension buffer-file-name))
+                  (setup-tide-mode))
+                (when (string-equal "js" (file-name-extension buffer-file-name))
+                  (setup-tide-mode))
+                (with-eval-after-load 'flycheck
+                  (flycheck-add-mode 'typescript-tslint 'web-mode))
+    ))))
     ;; enable typescript-tslint checker
-    (with-eval-after-load 'flycheck
-      (flycheck-add-mode 'typescript-tslint 'web-mode))))
+    
 
 ;; (add-to-list 'auto-mode-alist '("\\.html" . web-mode))
 
