@@ -771,6 +771,7 @@ SIZE :
   ;; company is an optional dependency. You have to
   ;; install it separately via package-install
   ;; `M-x package-install [ret] company`
+  (local-set-key (kbd "C-c d") 'tide-documentation-at-point)
   (company-mode +1))
 
 ;; typescript setup
