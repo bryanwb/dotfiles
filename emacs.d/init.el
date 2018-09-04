@@ -634,16 +634,6 @@ _s_: bash strict mode
  ;; If there is more than one, they won't work right.
  '(variable-pitch ((t (:height 1.5 :family "Sans Serif")))))
 
-;; ;; use indium instead of nodejs-repl
-;; ;; http://indium.readthedocs.io/en/latest/index.html
-;; (use-package indium
-;;   :ensure t
-;;   :config
-;;   (progn
-;;     (add-hook 'js-mode-hook #'indium-interaction-mode)
-;;     (define-key indium-interaction-mode-map (kbd "C-c C-c") 'indium-eval-region)))
-
-
 ;; adds /usr/local/bin to our PATH in eshell
 (add-to-list 'exec-path "/usr/local/bin")
 
@@ -748,15 +738,14 @@ SIZE :
                   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))))))
 
 
-;; (defun setup-tide-mode ()
-;;   (interactive)
-;;   (tide-setup)
-;;   (flycheck-mode +1)
-;;   (setq flycheck-check-syntax-automatically '(save mode-enabled))
-;;   (eldoc-mode +1)
-;;   (with-eval-after-load 'flycheck
-;;     (flycheck-add-mode 'typescript-tslint 'typescript-mode))
-;;   (tide-hl-identifier-mode +1))
+;; ;; use indium instead of nodejs-repl
+;; ;; http://indium.readthedocs.io/en/latest/index.html
+;; (use-package indium
+;;   :ensure t
+;;   :config
+;;   (progn
+;;     (add-hook 'js-mode-hook #'indium-interaction-mode)
+;;     (define-key indium-interaction-mode-map (kbd "C-c C-c") 'indium-eval-region)))
 
 (defun setup-tide-mode ()
   (interactive)
