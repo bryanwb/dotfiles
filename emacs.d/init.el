@@ -796,6 +796,7 @@ SIZE :
   (progn
     (flycheck-add-mode 'json-jsonlint 'json-mode)
     (add-hook 'json-mode-hook 'flycheck-mode)
+    (setq js-indent-level 2)
     (add-to-list 'auto-mode-alist '("\\.json" . json-mode))))
 
 (use-package web-mode
