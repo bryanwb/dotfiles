@@ -157,7 +157,7 @@ if [ ! -z "$(command -v brew)" ] ; then
    fi
 fi
 
-export PATH="/Users/hitman/bin:$GOPATH/bin/bin:$CHEFDK:/usr/local/sbin:/usr/local/bin:$PATH"
+export PATH="/Users/hitman/bin:/home/hitman/bin:$GOPATH/bin/bin:/usr/local/sbin:/usr/local/bin:$PATH"
 
 YARN_GLOBAL="~/.config/yarn/global/node_modules/.bin"
 export PATH="$YARN_GLOBAL:$PATH"
@@ -167,8 +167,8 @@ if [ -f $GOPATH/src/github.com/zquestz/s/autocomplete/s-completion.bash ]; then
 fi
 
 # load local secrets
-if [ -e ~/.bash_local ] ; then
-   source ~/.bash_local
+if [ -e ~/.private/.bash_local ] ; then
+   source ~/.private/.bash_local
 fi     
 
 export GTAGSLIBPATH=$HOME/.gtags/
@@ -192,3 +192,7 @@ docker-clean-containers () {
     docker ps -aq --no-trunc -f status=exited | xargs docker rm
 }
 
+export NODE_PATH=~/.config/yarn/global/node_modules/
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/hitman/local/google-cloud-sdk/completion.bash.inc' ]; then . '/home/hitman/local/google-cloud-sdk/completion.bash.inc'; fi
