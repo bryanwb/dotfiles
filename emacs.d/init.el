@@ -77,7 +77,11 @@
   :config
   (progn
     (setq solidity-flycheck-solium-checker-active t)
-    (add-to-list 'auto-mode-alist '("\\.sol$" . solidity-mode))))
+    (add-to-list 'auto-mode-alist '("\\.sol\\'" . solidity-mode))
+    (add-hook 'solidity-mode-hook
+              (lambda ()
+                (define-key solidity-mode-map (kbd "C-j") 'ivy-switch-buffer)))))
+ 
 
 
 (use-package exec-path-from-shell
@@ -379,16 +383,18 @@
                (setq-local counsel-dash-docsets '("Python 2")))))
 
 
-(add-hook 'python-mode-hook 'flycheck-mode)
-(add-hook 'python-mode-hook 'elpy-mode)
+(use-package elpy :ensure t
+  :config
+  (progn
+    (add-hook 'python-mode-hook 'flycheck-mode)
+    (add-hook 'python-mode-hook 'elpy-mode)
 
-(with-eval-after-load 'elpy
-  (remove-hook 'elpy-modules 'elpy-module-flymake)
-  (add-hook 'elpy-mode-hook 'elpy-use-ipython)
-  (setq elpy-rpc-backend "jedi")
-  (elpy-set-test-runner 'elpy-test-pytest-runner)
-  (defalias 'elpy-flymake-next-error 'flycheck-next-error)
-  (defalias 'elpy-flymake-previous-error 'flycheck-previous-error))
+    (with-eval-after-load 'elpy
+      (remove-hook 'elpy-modules 'elpy-module-flymake)
+      (setq elpy-rpc-backend "jedi")
+      (elpy-set-test-runner 'elpy-test-pytest-runner)
+      (defalias 'elpy-flymake-next-error 'flycheck-next-error)
+      (defalias 'elpy-flymake-previous-error 'flycheck-previous-error))))
 
   
 ;;(add-to-list 'auto-mode-alist '("\\.py\\'" . elpy-mode))
@@ -625,7 +631,7 @@ _s_: bash strict mode
  '(imenu-anywhere-buffer-filter-functions (quote (imenu-anywhere-same-project-p)))
  '(package-selected-packages
    (quote
-    (flymake-json smart-mode-line-powerline-theme js2-mode irony-eldoc flycheck-irony company-irony irony lsp-ui company-lsp lsp-mode lsp-javascript-typescript magit dockerfile-mode rjsx-mode rjsx indium js-comint helm-dash flymake-solidity solidity-mode go-mode projectile ivy buffer-move dracula-theme pyvenv ace-window atom-one-dark atom-dark-theme atom-one-dark-theme nov imenu-anywhere counsel-dash rubocop mmm-jinja2 groovy-mode company meghanada ivy-gitlab gitlab mvn dired-quick-sort hydra dired+ lorem-ipsum hc-zenburn-theme zenburn-theme swiper all-the-icons-ivy org org-brain undo-tree avy f s beacon vhdl-tools company-c-headers web-mode company-tern tern-auto-complete nodejs-repl tern mmm-mode better-shell py-autopep8 intero toml-mode haskell-mode ac-haskell-process tide dired-hacks-utils yaml-mode use-package typescript tablist sudo-edit spinner solarized-theme seq restclient queue powershell pdf-tools ox-pandoc org-present org-mobile-sync multi-eshell markdown-mode magit-gh-pulls know-your-http-well key-seq json-mode jinja2-mode ivy-hydra inf-ruby ido-vertical-mode helm-projectile helm-org-rifle helm-mt helm-gitlab helm-ag hcl-mode gradle-mode golint go-eldoc go-autocomplete gist ggtags flycheck flx-ido exec-path-from-shell eshell-manual elpy dumb-jump counsel-projectile clojure-mode cl-lib-highlight ansible-doc ag)))
+    (company-gtags flymake-json smart-mode-line-powerline-theme js2-mode irony-eldoc flycheck-irony company-irony irony lsp-ui company-lsp lsp-mode lsp-javascript-typescript magit dockerfile-mode rjsx-mode rjsx indium js-comint helm-dash flymake-solidity solidity-mode go-mode projectile ivy buffer-move dracula-theme pyvenv ace-window atom-one-dark atom-dark-theme atom-one-dark-theme nov imenu-anywhere counsel-dash rubocop mmm-jinja2 groovy-mode company meghanada ivy-gitlab gitlab mvn dired-quick-sort hydra dired+ lorem-ipsum hc-zenburn-theme zenburn-theme swiper all-the-icons-ivy org org-brain undo-tree avy f s beacon vhdl-tools company-c-headers web-mode company-tern tern-auto-complete nodejs-repl tern mmm-mode better-shell py-autopep8 intero toml-mode haskell-mode ac-haskell-process tide dired-hacks-utils yaml-mode use-package typescript tablist sudo-edit spinner solarized-theme seq restclient queue powershell pdf-tools ox-pandoc org-present org-mobile-sync multi-eshell markdown-mode magit-gh-pulls know-your-http-well key-seq json-mode jinja2-mode ivy-hydra inf-ruby ido-vertical-mode helm-projectile helm-org-rifle helm-mt helm-gitlab helm-ag hcl-mode gradle-mode golint go-eldoc go-autocomplete gist ggtags flycheck flx-ido exec-path-from-shell eshell-manual elpy dumb-jump counsel-projectile clojure-mode cl-lib-highlight ansible-doc ag)))
  '(typescript-indent-level 2))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -695,13 +701,19 @@ SIZE :
 (use-package irony-eldoc
   :ensure t)
 
+(defun load-irony-mode ()
+  "Only load irony-mode if solidity-mode not enabled."
+  (if (eq major-mode 'solidity-mode)
+      nil
+      (irony-mode)))
+
 (use-package irony
   :ensure t
   :defer t
   :init
-  (add-hook 'c++-mode-hook 'irony-mode)
-  (add-hook 'c-mode-hook 'irony-mode)
-  (add-hook 'objc-mode-hook 'irony-mode)
+  (add-hook 'c++-mode-hook 'load-irony-mode)
+  (add-hook 'c-mode-hook 'load-irony-mode)
+  (add-hook 'objc-mode-hook 'load-irony-mode)
   :config
   ;; replace the `completion-at-point' and `complete-symbol' bindings in
   ;; irony-mode's buffers by irony-mode's function
@@ -723,17 +735,22 @@ SIZE :
               (lambda ()
                 (flycheck-mode)
                 (company-mode)
-                (use-package company-irony :ensure t :defer t)
-                (use-package company-c-headers :ensure t :defer t
+                (use-package company-irony :ensure t
+                  :config
+                  (add-to-list 'company-backends 'company-irony))
+                (use-package company-c-headers :ensure t
                    :config
-                   (add-to-list 'company-c-headers-path-system "/usr/include"))
-                (require 'company-irony)
-                (require 'company-gtags)
-                (require 'company-c-headers)
-                (define-key c-mode-map  [(tab)] 'company-complete)
-                (push company-backends 'company-irony)
-                (push company-backends 'company-gtags)
-                (push company-backends 'company-c-headers)
+                   (add-to-list 'company-c-headers-path-system "/usr/include")
+                   (add-to-list 'company-backends 'company-c-headers))
+                ;; (use-package company-gtags :ensure t
+                ;;    :config
+                ;;    (add-to-list 'company-backends 'company-gtags))
+                ;; (require 'company-gtags)
+                ;; (require 'company-c-headers)
+                ;; (define-key c-mode-map  [(tab)] 'company-complete)
+                
+                ;; (push company-backends 'company-gtags)
+                ;; (push company-backends 'company-c-headers)
                 (eval-after-load 'flycheck
                   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))))))
 
@@ -1209,3 +1226,9 @@ Uses `bwb-timestamp-format' for formatting the date/time."
        (interactive)
        (insert (format-time-string bwb-timestamp-format (current-time)))
        )
+
+
+;; require confirmation before closing emacs
+(add-hook 'kill-emacs-query-functions
+          (lambda () (y-or-n-p "Do you really want to exit Emacs? "))
+          'append)
