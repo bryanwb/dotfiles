@@ -804,7 +804,17 @@ SIZE :
 ;;     ;; configure javascript-tide checker to run after your default javascript checker
 ;;     (setq js2-basic-offset 2)
 ;;     (flycheck-add-next-checker 'javascript-eslint 'javascript-tide 'append)
-;;     (add-to-list 'auto-mode-alist '("\\.js" . js2-mode))))
+(use-package js2-mode
+  :ensure t
+  :config
+  (progn
+    (add-hook 'js2-mode-hook #'setup-tide-mode)
+    ;; configure javascript-tide checker to run after your default javascript checker
+    (setq js2-basic-offset 2)
+    (flycheck-add-next-checker 'javascript-eslint 'javascript-tide 'append)
+    (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
+    (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))))
+
 
 
 ;; (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
