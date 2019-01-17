@@ -36,6 +36,7 @@
 ;; C-c C-r 'ivy-resume
 ;; C-c i m  'counsel-imenu
 ;; C-x t 'helm-mt
+;; C-c j ivy-immediate-done stop ivy autocompletion
 ;; M-l 'counsel-bookmark
 
 ;; aliases
