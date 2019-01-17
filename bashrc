@@ -107,6 +107,10 @@ fi
 
 alias scps="scp -i /home/hitman/chef-repo/.chef/id_rsa"
 alias sshS="ssh -i /home/hitman/chef-repo/.chef/id_rsa "
+
+# allow use of `await` in the shell
+# alias node="node --experimental-repl-await"
+
 alias b="bundle exec"
 #alias gnome-terminal="gnome-terminal -x screen"
 
@@ -157,10 +161,12 @@ if [ ! -z "$(command -v brew)" ] ; then
    fi
 fi
 
-export PATH="/Users/hitman/bin:/home/hitman/bin:$GOPATH/bin/bin:/usr/local/sbin:/usr/local/bin:$PATH"
+export PATH="/Users/hitman/bin:/home/hitman/bin:/usr/local/sbin:/usr/local/bin:$PATH"
 
 YARN_GLOBAL="~/.config/yarn/global/node_modules/.bin"
 export PATH="$YARN_GLOBAL:$PATH"
+export NIX_PATH="~/.nix-profile/bin"
+export PATH="$NIX_PATH:$PATH"
 
 if [ -f $GOPATH/src/github.com/zquestz/s/autocomplete/s-completion.bash ]; then
     . $GOPATH/src/github.com/zquestz/s/autocomplete/s-completion.bash
@@ -193,6 +199,9 @@ docker-clean-containers () {
 }
 
 export NODE_PATH=~/.config/yarn/global/node_modules/
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/hitman/local/google-cloud-sdk/path.bash.inc' ]; then . '/home/hitman/local/google-cloud-sdk/path.bash.inc'; fi
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/hitman/local/google-cloud-sdk/completion.bash.inc' ]; then . '/home/hitman/local/google-cloud-sdk/completion.bash.inc'; fi
+
