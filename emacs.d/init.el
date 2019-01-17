@@ -162,12 +162,14 @@
 (use-package ivy-hydra
   :ensure t)
 
-
+;; there is a special case for Makefile mode that doesn't work properly with the indent-according-to-mode function
 (defun bwb-indent-or-complete ()
     (interactive)
     (if (looking-at "\\_>")
         (company-complete-common)
-      (indent-according-to-mode)))
+      (if (derived-mode-p 'makefile-gmake-mode)
+          (indent-for-tab-command)
+        (indent-according-to-mode))))
 
 ;; == company-mode ==
 (use-package company
@@ -722,11 +724,12 @@ SIZE :
     (define-key irony-mode-map [remap completion-at-point]
       'irony-completion-at-point-async)
     (define-key irony-mode-map [remap complete-symbol]
-      'irony-completion-at-point-async))
-  (add-hook 'irony-mode-hook 'my-irony-mode-hook)
-  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-  (add-hook 'irony-mode-hook 'irony-eldoc)
-  )
+      'irony-completion-at-point-async)
+    (define-key irony-mode-map (kbd "C-c d") 'irony-get-type)
+    (add-hook 'irony-mode-hook 'my-irony-mode-hook)
+    (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+    (add-hook 'irony-mode-hook 'irony-eldoc)
+    ))
  
 (use-package flycheck-irony
   :ensure t
@@ -796,14 +799,6 @@ SIZE :
   ))
 
 ;; use web-mode + tide-mode for javascript instead
-;; (use-package js2-mode
-;;   :ensure t
-;;   :config
-;;   (progn
-;;     (add-hook 'js2-mode-hook #'setup-tide-mode)
-;;     ;; configure javascript-tide checker to run after your default javascript checker
-;;     (setq js2-basic-offset 2)
-;;     (flycheck-add-next-checker 'javascript-eslint 'javascript-tide 'append)
 (use-package js2-mode
   :ensure t
   :config
