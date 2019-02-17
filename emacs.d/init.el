@@ -393,8 +393,10 @@
     (add-hook 'python-mode-hook 'elpy-mode)
 
     (with-eval-after-load 'elpy
+      (setq elpy-rpc-python-command "python3")      
       (remove-hook 'elpy-modules 'elpy-module-flymake)
       (setq elpy-rpc-backend "jedi")
+      (setq elpy-syntax-check-command "/home/hitman/bin/flake8")
       (elpy-set-test-runner 'elpy-test-pytest-runner)
       (defalias 'elpy-flymake-next-error 'flycheck-next-error)
       (defalias 'elpy-flymake-previous-error 'flycheck-previous-error))))
