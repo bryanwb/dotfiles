@@ -227,13 +227,6 @@
     (setq flycheck-highlighting-mode 'lines)))
 
 
-;; unfortunately this does not work for me at all
-(use-package ace-window
-  :ensure t
-  :config
-  (progn
-    (global-set-key (kbd "M-c") 'ace-window)))
-
 (use-package
   smart-mode-line-powerline-theme
   :ensure t
