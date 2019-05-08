@@ -390,42 +390,43 @@
 (setq find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))
 
 
+;; elpy python config
 ;; python config
 ;;(require 'elpy)
 ;; (elpy-enable)
 
-(defalias 'activate 'pyvenv-activate)
+;; (defalias 'activate 'pyvenv-activate)
 
-(setq python-check-command "/usr/local/bin/flake8")
-(setq python-shell-interpreter "ipython")
-(setq python-shell-interpreter-args "--simple-prompt --pprint")
+;; (setq python-check-command "/usr/local/bin/flake8")
+;; (setq python-shell-interpreter "ipython")
+;; (setq python-shell-interpreter-args "--simple-prompt --pprint")
 
-(put 'upcase-region 'disabled nil)
+;; (put 'upcase-region 'disabled nil)
 
 ;; this is the only way to change the offset, customizing it otherwise
 ;; doesn't work
-(add-hook 'python-mode-hook
-   (function (lambda ()                  
-               (setq python-indent-offset 4)
-               (define-key python-mode-map (kbd "C-i") 'elpy-company-backend)
-               (define-key python-mode-map (kbd "<tab>") 'indent-for-tab-command)
-               (setq-local counsel-dash-docsets '("Python 2")))))
+;; (add-hook 'python-mode-hook
+;;    (function (lambda ()                  
+;;                (setq python-indent-offset 4)
+;;                (define-key python-mode-map (kbd "C-i") 'elpy-company-backend)
+;;                (define-key python-mode-map (kbd "<tab>") 'indent-for-tab-command)
+;;                (setq-local counsel-dash-docsets '("Python 2")))))
 
 
-(use-package elpy :ensure t
-  :config
-  (progn
-    (add-hook 'python-mode-hook 'flycheck-mode)
-    (add-hook 'python-mode-hook 'elpy-mode)
+;; (use-package elpy :ensure t
+;;   :config
+;;   (progn
+;;     (add-hook 'python-mode-hook 'flycheck-mode)
+;;     (add-hook 'python-mode-hook 'elpy-mode)
 
-    (with-eval-after-load 'elpy
-      (setq elpy-rpc-python-command "python3")      
-      (remove-hook 'elpy-modules 'elpy-module-flymake)
-      (setq elpy-rpc-backend "jedi")
-      (setq elpy-syntax-check-command "/home/hitman/bin/flake8")
-      (elpy-set-test-runner 'elpy-test-pytest-runner)
-      (defalias 'elpy-flymake-next-error 'flycheck-next-error)
-      (defalias 'elpy-flymake-previous-error 'flycheck-previous-error))))
+;;     (with-eval-after-load 'elpy
+;;       (setq elpy-rpc-python-command "python3")      
+;;       (remove-hook 'elpy-modules 'elpy-module-flymake)
+;;       (setq elpy-rpc-backend "jedi")
+;;       (setq elpy-syntax-check-command "/home/hitman/bin/flake8")
+;;       (elpy-set-test-runner 'elpy-test-pytest-runner)
+;;       (defalias 'elpy-flymake-next-error 'flycheck-next-error)
+;;       (defalias 'elpy-flymake-previous-error 'flycheck-previous-error))))
 
   
 ;;(add-to-list 'auto-mode-alist '("\\.py\\'" . elpy-mode))
