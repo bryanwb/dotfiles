@@ -18,7 +18,6 @@
 ;; Global keymappings for sanity
 ;; M-o toggle todo status
 ;; C-` 'magit-status
-;; C-i elpy complete at point, python-mode only
 ;; C-f 'projectile-command-map, i.e. projectile hot-key
 ;; C-f l 'projectile-find-file-other-window
 ;; M-m 'whitespace-cleanup
@@ -28,7 +27,6 @@
 ;; C-c j ivy-immediate-done
 ;; C-x C-f 'counsel-find-file
 ;; M-x counsel-M-x
-;; M-/ 'hippie-expand
 ;; C-s 'swiper
 ;; M-t 'revert-buffer
 ;; C-c c 'org-capture
@@ -710,6 +708,7 @@ SIZE :
 
 
 ;; C, C++ configuration
+;; mostly taken from here https://github.com/MaskRay/ccls/wiki/lsp-mode
 (use-package counsel-gtags
   :ensure t
   :defer t
