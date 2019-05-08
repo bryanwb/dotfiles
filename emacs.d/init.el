@@ -84,6 +84,32 @@
                 (define-key solidity-mode-map (kbd "C-j") 'ivy-switch-buffer)))))
  
 
+;; java setup
+;; taken from http://www.skybert.net/emacs/enterprise-java-development-in-emacs/
+;; extra setup, download eclipse jdt and unpack manually to ~/.lsp-java-jdk
+(use-package treemacs
+  :ensure t)
+
+(use-package lsp-java
+  :ensure t
+  :after lsp
+  :config
+  (progn
+    (setq lsp-java-java-path "/usr/lib/jvm/java-9-openjdk-9.0.4.11-6.fc28.x86_64/bin/java")
+    (setq lsp-java-server-install-dir "/home/hitman/.lsp-java-jdt/")
+    (add-hook 'java-mode-hook 'lsp)
+    ))
+
+(use-package dap-mode
+  :ensure t :after lsp-mode
+  :config
+  (dap-mode t)
+  (dap-ui-mode t))
+
+(use-package dap-java :after (lsp-java))
+(use-package lsp-java-treemacs :after (treemacs))
+
+
 
 (use-package exec-path-from-shell
   :ensure t)
@@ -636,7 +662,7 @@ _s_: bash strict mode
  '(imenu-anywhere-buffer-filter-functions (quote (imenu-anywhere-same-project-p)))
  '(package-selected-packages
    (quote
-    (protobuf-mode dash dash-at-point ccls counsel-gtags company-gtags flymake-json smart-mode-line-powerline-theme js2-mode irony-eldoc flycheck-irony company-irony irony lsp-ui company-lsp lsp-javascript-typescript magit dockerfile-mode rjsx-mode rjsx indium js-comint helm-dash flymake-solidity solidity-mode go-mode projectile ivy buffer-move dracula-theme pyvenv ace-window atom-one-dark atom-dark-theme atom-one-dark-theme nov imenu-anywhere counsel-dash rubocop mmm-jinja2 groovy-mode company meghanada ivy-gitlab gitlab mvn dired-quick-sort hydra dired+ lorem-ipsum hc-zenburn-theme zenburn-theme swiper all-the-icons-ivy org org-brain undo-tree avy f s beacon vhdl-tools company-c-headers web-mode company-tern tern-auto-complete nodejs-repl tern mmm-mode better-shell py-autopep8 intero toml-mode haskell-mode ac-haskell-process tide dired-hacks-utils yaml-mode use-package typescript tablist sudo-edit spinner solarized-theme seq restclient queue powershell pdf-tools ox-pandoc org-present org-mobile-sync multi-eshell markdown-mode magit-gh-pulls know-your-http-well key-seq json-mode jinja2-mode ivy-hydra inf-ruby ido-vertical-mode helm-projectile helm-org-rifle helm-mt helm-gitlab helm-ag hcl-mode gradle-mode golint go-eldoc go-autocomplete gist ggtags flycheck flx-ido exec-path-from-shell eshell-manual elpy dumb-jump counsel-projectile clojure-mode cl-lib-highlight ansible-doc ag)))
+    (lsp-mode lsp-java protobuf-mode dash dash-at-point ccls counsel-gtags company-gtags flymake-json smart-mode-line-powerline-theme js2-mode irony-eldoc flycheck-irony company-irony irony lsp-ui company-lsp lsp-javascript-typescript magit dockerfile-mode rjsx-mode rjsx indium js-comint helm-dash flymake-solidity solidity-mode go-mode projectile ivy buffer-move dracula-theme pyvenv ace-window atom-one-dark atom-dark-theme atom-one-dark-theme nov imenu-anywhere counsel-dash rubocop mmm-jinja2 groovy-mode company meghanada ivy-gitlab gitlab mvn dired-quick-sort hydra dired+ lorem-ipsum hc-zenburn-theme zenburn-theme swiper all-the-icons-ivy org org-brain undo-tree avy f s beacon vhdl-tools company-c-headers web-mode company-tern tern-auto-complete nodejs-repl tern mmm-mode better-shell py-autopep8 intero toml-mode haskell-mode ac-haskell-process tide dired-hacks-utils yaml-mode use-package typescript tablist sudo-edit spinner solarized-theme seq restclient queue powershell pdf-tools ox-pandoc org-present org-mobile-sync multi-eshell markdown-mode magit-gh-pulls know-your-http-well key-seq json-mode jinja2-mode ivy-hydra inf-ruby ido-vertical-mode helm-projectile helm-org-rifle helm-mt helm-gitlab helm-ag hcl-mode gradle-mode golint go-eldoc go-autocomplete gist ggtags flycheck flx-ido exec-path-from-shell eshell-manual elpy dumb-jump counsel-projectile clojure-mode cl-lib-highlight ansible-doc ag)))
  '(typescript-indent-level 2))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
