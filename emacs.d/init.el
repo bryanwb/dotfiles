@@ -667,16 +667,6 @@ _s_: bash strict mode
 ;; adds /usr/local/bin to our PATH in eshell
 (add-to-list 'exec-path "/usr/local/bin")
 
-
-;; haskell setup
-(use-package
-  intero
-  :ensure t
-  :config
-  (progn
-    (add-hook 'haskell-mode-hook 'intero-mode)))
-
-
 ;; makes eshell behave better displaying lots of text
 (setenv "PAGER" "cat")
 (setenv "TERM" "xterm-256color")
