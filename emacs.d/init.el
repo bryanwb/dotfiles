@@ -709,26 +709,13 @@ SIZE :
   ("K" (lambda () (interactive) (bwb--set-fontsize -1)) "-- less"))
 
 
-;; C, C++ programming
-;; from http://cachestocaches.com/2015/8/c-completion-emacs/
-;; and https://github.com/martin-tornqvist/env/blob/master/how-to-setup-irony-mode.txt
-(use-package irony-eldoc
-  :ensure t)
-
-(defun load-irony-mode ()
-  "Only load irony-mode if solidity-mode not enabled."
-  (if (eq major-mode 'solidity-mode)
-      nil
-      (irony-mode)))
-
+;; C, C++ configuration
 (use-package counsel-gtags
   :ensure t
   :defer t
   :init
   (setq tags-file-name "GTAGS"))
 
-
-;; use in place of irony mode
 (use-package ccls
   :ensure t
   :defer t
@@ -739,65 +726,6 @@ SIZE :
   (use-package lsp-ui :commands lsp-ui-mode)
   (use-package company-lsp :commands company-lsp)
   (setq ccls-executable "/home/hitman/bin/ccls"))
-
-
-;; (use-package irony
-;;   :ensure t
-;;   :defer t
-;;   :init
-;;   (add-hook 'c++-mode-hook 'load-irony-mode)
-;;   (add-hook 'c-mode-hook 'load-irony-mode)
-;;   (add-hook 'objc-mode-hook 'load-irony-mode)
-;;   :config
-;;   ;; replace the `completion-at-point' and `complete-symbol' bindings in
-;;   ;; irony-mode's buffers by irony-mode's function
-;;   (defun my-irony-mode-hook ()
-;;     (define-key irony-mode-map [remap completion-at-point]
-;;       'irony-completion-at-point-async)
-;;     (define-key irony-mode-map [remap complete-symbol]
-;;       'irony-completion-at-point-async)
-;;     (define-key irony-mode-map (kbd "C-c d") 'irony-get-type)
-;;     (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-;;     (add-hook 'irony-mode-hook 'irony-eldoc)
-;;     (add-hook 'c-mode-hook 'counsel-gtags-mode)
-;;     (add-hook 'c++-mode-hook 'counsel-gtags-mode)
-;;     ;; enable use of gtags
-;;     (with-eval-after-load 'counsel-gtags
-;;       (define-key counsel-gtags-mode-map (kbd "M-.") 'counsel-gtags-find-definition)
-;;       (define-key counsel-gtags-mode-map (kbd "M-r") 'counsel-gtags-find-reference)
-;;       (define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
-;;       (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-go-backward))
-;;     )
-;;   (add-hook 'irony-mode-hook 'my-irony-mode-hook)
-;;   )
- 
-;; (use-package flycheck-irony
-;;   :ensure t
-;;   :config
-;;   (progn
-;;     (add-hook 'c-mode-hook
-;;               (lambda ()
-;;                 (flycheck-mode)
-;;                 (company-mode)
-;;                 (use-package company-irony :ensure t
-;;                   :config
-;;                   (add-to-list 'company-backends 'company-irony))
-;;                 (use-package company-c-headers :ensure t
-;;                    :config
-;;                    (add-to-list 'company-c-headers-path-system "/usr/include")
-;;                    (add-to-list 'company-backends 'company-c-headers))
-;;                 ;; (use-package company-gtags :ensure t
-;;                 ;;    :config
-;;                 ;;    (add-to-list 'company-backends 'company-gtags))
-;;                 ;; (require 'company-gtags)
-;;                 ;; (require 'company-c-headers)
-;;                 ;; (define-key c-mode-map  [(tab)] 'company-complete)
-                
-;;                 ;; (push company-backends 'company-gtags)
-;;                 ;; (push company-backends 'company-c-headers)
-;;                 (eval-after-load 'flycheck
-;;                   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))))))
-
 
 ;; ;; use indium instead of nodejs-repl
 ;; ;; http://indium.readthedocs.io/en/latest/index.html
@@ -851,8 +779,6 @@ SIZE :
     (flycheck-add-next-checker 'javascript-eslint 'javascript-tide 'append)
     (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
     (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))))
-
-
 
 ;; (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
 
