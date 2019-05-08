@@ -49,6 +49,9 @@
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
+;; this ensures that I am not asked to confirm that the theme can be loaded
+(setq custom-safe-themes t)
+
 ;; packaging setup
 (require 'package)
 (setq package-archives '(
@@ -427,6 +430,28 @@
 
 ;;(global-set-key (kbd "M-/") 'hippie-expand)
 
+;; new python setup
+;; https://github.com/emacs-lsp/lsp-python-ms
+;; install dotnet sdk https://dotnet.microsoft.com/download/linux-package-manager/fedora28/sdk-current
+;; sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+;; wget -q https://packages.microsoft.com/config/fedora/27/prod.repo
+;; sudo mv prod.repo /etc/yum.repos.d/microsoft-prod.repo
+;; sudo chown root:root /etc/yum.repos.d/microsoft-prod.repo
+;; sudo dnf install dotnet-sdk-2.2
+;; ln -sf /home/hitman/local/python-language-server/output/bin/Release/linux-x64/publish/Microsoft.Python.LanguageServer ~/bin
+(use-package company-lsp :init
+  (push 'company-lsp company-backends))
+
+(use-package lsp-python-ms
+  :ensure t
+  :hook (python-mode . lsp)
+  :demand
+  :config
+  (use-package lsp-mode :commands lsp)
+  (use-package lsp-ui :commands lsp-ui-mode)
+  (setq lsp-python-ms-executable "/home/hitman/local/python-language-server/output/bin/Release/linux-x64/publish/Microsoft.Python.LanguageServer")
+  )
+
 
 ;; (defun my-go-mode-hook ()
 ;;   (setq tab-width 4)
@@ -653,7 +678,7 @@ _s_: bash strict mode
  '(imenu-anywhere-buffer-filter-functions (quote (imenu-anywhere-same-project-p)))
  '(package-selected-packages
    (quote
-    (lsp-mode lsp-java protobuf-mode dash dash-at-point ccls counsel-gtags company-gtags flymake-json smart-mode-line-powerline-theme js2-mode irony-eldoc flycheck-irony company-irony irony lsp-ui company-lsp lsp-javascript-typescript magit dockerfile-mode rjsx-mode rjsx indium js-comint helm-dash flymake-solidity solidity-mode go-mode projectile ivy buffer-move dracula-theme pyvenv ace-window atom-one-dark atom-dark-theme atom-one-dark-theme nov imenu-anywhere counsel-dash rubocop mmm-jinja2 groovy-mode company meghanada ivy-gitlab gitlab mvn dired-quick-sort hydra dired+ lorem-ipsum hc-zenburn-theme zenburn-theme swiper all-the-icons-ivy org org-brain undo-tree avy f s beacon vhdl-tools company-c-headers web-mode company-tern tern-auto-complete nodejs-repl tern mmm-mode better-shell py-autopep8 intero toml-mode haskell-mode ac-haskell-process tide dired-hacks-utils yaml-mode use-package typescript tablist sudo-edit spinner solarized-theme seq restclient queue powershell pdf-tools ox-pandoc org-present org-mobile-sync multi-eshell markdown-mode magit-gh-pulls know-your-http-well key-seq json-mode jinja2-mode ivy-hydra inf-ruby ido-vertical-mode helm-projectile helm-org-rifle helm-mt helm-gitlab helm-ag hcl-mode gradle-mode golint go-eldoc go-autocomplete gist ggtags flycheck flx-ido exec-path-from-shell eshell-manual elpy dumb-jump counsel-projectile clojure-mode cl-lib-highlight ansible-doc ag)))
+    (lsp-imenu lsp-python-ms lsp-mode lsp-java protobuf-mode dash dash-at-point ccls counsel-gtags company-gtags flymake-json smart-mode-line-powerline-theme js2-mode lsp-ui company-lsp lsp-javascript-typescript magit dockerfile-mode rjsx-mode rjsx indium js-comint helm-dash flymake-solidity solidity-mode go-mode projectile ivy buffer-move dracula-theme pyvenv nov imenu-anywhere counsel-dash rubocop mmm-jinja2 company ivy-gitlab gitlab mvn dired-quick-sort hydra dired+ lorem-ipsum swiper all-the-icons-ivy org org-brain undo-tree avy f s beacon vhdl-tools company-c-headers web-mode nodejs-repl mmm-mode better-shell py-autopep8 toml-mode tide dired-hacks-utils yaml-mode use-package typescript tablist sudo-edit spinner seq restclient queue powershell pdf-tools ox-pandoc org-present org-mobile-sync multi-eshell markdown-mode magit-gh-pulls know-your-http-well key-seq json-mode jinja2-mode ivy-hydra inf-ruby ido-vertical-mode hcl-mode golint go-eldoc go-autocomplete gist ggtags flycheck flx-ido exec-path-from-shell eshell-manual elpy dumb-jump counsel-projectile clojure-mode cl-lib-highlight ansible-doc ag)))
  '(typescript-indent-level 2))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
