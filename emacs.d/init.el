@@ -337,7 +337,6 @@
   (require 'saveplace)
   (setq-default save-place t)
 
-  ;;  (global-set-key (kbd "M-/") 'hippie-expand) 
   (show-paren-mode 1)
   (setq-default indent-tabs-mode nil)
   (setq select-enable-clipboard t
@@ -435,7 +434,7 @@
 ;;       (define-key ansi-term-map (kbd "C-j") 'ivy-switch-buffer))))
 
 
-(global-set-key (kbd "M-/") 'hippie-expand)
+;;(global-set-key (kbd "M-/") 'hippie-expand)
 
 
 ;; (defun my-go-mode-hook ()
