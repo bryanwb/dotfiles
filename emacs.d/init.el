@@ -449,6 +449,13 @@
   :config
   (use-package lsp-mode :commands lsp)
   (use-package lsp-ui :commands lsp-ui-mode)
+  (defun b-debug ()
+    (interactive)
+    (insert "from IPython import embed; embed()\n")
+    )
+  (add-hook 'python-mode-hook
+            (lambda()
+              (setq python-indent-offset 4)))
   (setq lsp-python-ms-executable "/home/hitman/local/python-language-server/output/bin/Release/linux-x64/publish/Microsoft.Python.LanguageServer")
   )
 
