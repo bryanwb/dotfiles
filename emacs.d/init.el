@@ -84,7 +84,6 @@
               (lambda ()
                 (define-key solidity-mode-map (kbd "C-j") 'ivy-switch-buffer)))))
  
-
 ;; java setup
 ;; taken from http://www.skybert.net/emacs/enterprise-java-development-in-emacs/
 ;; extra setup, download eclipse jdt and unpack manually to ~/.lsp-java-jdk
@@ -685,7 +684,7 @@ _s_: bash strict mode
  '(imenu-anywhere-buffer-filter-functions (quote (imenu-anywhere-same-project-p)))
  '(package-selected-packages
    (quote
-    (lsp-imenu lsp-python-ms lsp-mode lsp-java protobuf-mode dash dash-at-point ccls counsel-gtags company-gtags flymake-json smart-mode-line-powerline-theme js2-mode lsp-ui company-lsp lsp-javascript-typescript magit dockerfile-mode rjsx-mode rjsx indium js-comint helm-dash flymake-solidity solidity-mode go-mode projectile ivy buffer-move dracula-theme pyvenv nov imenu-anywhere counsel-dash rubocop mmm-jinja2 company ivy-gitlab gitlab mvn dired-quick-sort hydra dired+ lorem-ipsum swiper all-the-icons-ivy org org-brain undo-tree avy f s beacon vhdl-tools company-c-headers web-mode nodejs-repl mmm-mode better-shell py-autopep8 toml-mode tide dired-hacks-utils yaml-mode use-package typescript tablist sudo-edit spinner seq restclient queue powershell pdf-tools ox-pandoc org-present org-mobile-sync multi-eshell markdown-mode magit-gh-pulls know-your-http-well key-seq json-mode jinja2-mode ivy-hydra inf-ruby ido-vertical-mode hcl-mode golint go-eldoc go-autocomplete gist ggtags flycheck flx-ido exec-path-from-shell eshell-manual elpy dumb-jump counsel-projectile clojure-mode cl-lib-highlight ansible-doc ag)))
+    (eyebrowse perspeen lsp-imenu lsp-python-ms lsp-mode lsp-java protobuf-mode dash dash-at-point ccls counsel-gtags company-gtags flymake-json smart-mode-line-powerline-theme js2-mode lsp-ui company-lsp lsp-javascript-typescript magit dockerfile-mode rjsx-mode rjsx indium js-comint helm-dash flymake-solidity solidity-mode go-mode projectile ivy buffer-move dracula-theme pyvenv nov imenu-anywhere counsel-dash rubocop mmm-jinja2 company ivy-gitlab gitlab mvn dired-quick-sort hydra dired+ lorem-ipsum swiper all-the-icons-ivy org org-brain undo-tree avy f s beacon vhdl-tools company-c-headers web-mode nodejs-repl mmm-mode better-shell py-autopep8 toml-mode tide dired-hacks-utils yaml-mode use-package typescript tablist sudo-edit spinner seq restclient queue powershell pdf-tools ox-pandoc org-present org-mobile-sync multi-eshell markdown-mode magit-gh-pulls know-your-http-well key-seq json-mode jinja2-mode ivy-hydra inf-ruby ido-vertical-mode hcl-mode golint go-eldoc go-autocomplete gist ggtags flycheck flx-ido exec-path-from-shell eshell-manual elpy dumb-jump counsel-projectile clojure-mode cl-lib-highlight ansible-doc ag)))
  '(typescript-indent-level 2))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -1236,4 +1235,9 @@ Uses `bwb-timestamp-format' for formatting the date/time."
 ;; require confirmation before closing emacs
 (add-hook 'kill-emacs-query-functions
           (lambda () (y-or-n-p "Do you really want to exit Emacs? "))
-          'append)
+          'append) 
+
+
+;; desktop-save
+(desktop-save-mode 1)
+(add-to-list 'desktop-globals-to-save 'ivy-views)
