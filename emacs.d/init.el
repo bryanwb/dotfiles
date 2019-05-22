@@ -454,6 +454,8 @@
     )
   (add-hook 'python-mode-hook
             (lambda()
+              (setq python-shell-interpreter "/usr/local/bin/pipenv")
+              (setq python-shell-interpreter-args "run ipython --simple-prompt --pprint")
               (setq python-indent-offset 4)))
   (setq lsp-python-ms-executable "/home/hitman/local/python-language-server/output/bin/Release/linux-x64/publish/Microsoft.Python.LanguageServer")
   )
@@ -1239,5 +1241,7 @@ Uses `bwb-timestamp-format' for formatting the date/time."
 
 
 ;; desktop-save
+;; https://www.emacswiki.org/emacs/Desktop
+;; http://pragmaticemacs.com/emacs/save-window-layouts-with-ivy-view/
 (desktop-save-mode 1)
 (add-to-list 'desktop-globals-to-save 'ivy-views)
