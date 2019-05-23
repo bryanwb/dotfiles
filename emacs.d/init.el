@@ -454,6 +454,9 @@
     )
   (add-hook 'python-mode-hook
             (lambda()
+              (lsp-ui-flycheck-enable t)
+              ;; this causes incredible slowness for some reason
+              (lsp-ui-sideline-enable nil)
               (setq python-shell-interpreter "/usr/local/bin/pipenv")
               (setq python-shell-interpreter-args "run ipython --simple-prompt --pprint")
               (setq python-indent-offset 4)))
