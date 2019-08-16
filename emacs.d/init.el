@@ -111,8 +111,8 @@
 
 
 
-(use-package exec-path-from-shell
-  :ensure t)
+;; (use-package exec-path-from-shell
+;;   :ensure t)
 
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
@@ -450,6 +450,10 @@
   (use-package lsp-ui :commands lsp-ui-mode)
   (defun b-debug ()
     (interactive)
+    (insert "import bpdb; bpdb.set_trace()\n")
+    )
+  (defun b-ipy ()
+    (interactive)
     (insert "from IPython import embed; embed()\n")
     )
   (add-hook 'python-mode-hook
@@ -504,23 +508,23 @@
 ;; (global-set-key (kbd "C-c l") 'bookmark-bmenu-list)
 (global-set-key (kbd "M-t") 'revert-buffer)
 
-(defun term-toggle-mode ()
-  (interactive)
-  (if (term-in-line-mode)
-      (term-char-mode)
-    (term-line-mode)))
+;; (defun term-toggle-mode ()
+;;   (interactive)
+;;   (if (term-in-line-mode)
+;;       (term-char-mode)
+;;     (term-line-mode)))
 
-(add-hook 'term-mode-hook
-          (lambda ()
-            (defmacro term-in-char-mode () '(eq (current-local-map) term-raw-map))
-            (defmacro term-in-line-mode () '(not (term-in-char-mode)))
-            (setq yas-dont-activate t)
-            (define-key term-mode-map (kbd "M-j") 'term-toggle-mode)
-            (define-key term-raw-map (kbd "M-j") 'term-toggle-mode)
-            (define-key term-raw-map (kbd "C-l") 'other-window)
-            (define-key term-raw-map (kbd "C-j") 'ivy-switch-buffer)))
+;; (add-hook 'term-mode-hook
+;;           (lambda ()
+;;             (defmacro term-in-char-mode () '(eq (current-local-map) term-raw-map))
+;;             (defmacro term-in-line-mode () '(not (term-in-char-mode)))
+;;             (setq yas-dont-activate t)
+;;             (define-key term-mode-map (kbd "M-j") 'term-toggle-mode)
+;;             (define-key term-raw-map (kbd "M-j") 'term-toggle-mode)
+;;             (define-key term-raw-map (kbd "C-l") 'other-window)
+;;             (define-key term-raw-map (kbd "C-j") 'ivy-switch-buffer)))
 
-(setq explicit-shell-file-name "/bin/bash")
+;; (setq explicit-shell-file-name "/bin/bash")
 
 
 ;; orgmode setup
@@ -686,10 +690,16 @@ _s_: bash strict mode
  '(custom-safe-themes
    (quote
     ("6bc2bb2b8de7f68df77642b0615d40dc7850c2906b272d3f83a511f7195b07da" "8148420dfc7500b024735da3399f6d0b21f92bebeb1ff630f59422de719937c6" "5c9d6e9d35f1826a93985c2f4ed1c38151d99fd781e5764b1cfe5352f01345e5" "cc67c4d5fcd37a750975cd50fb2555c9654dc5b92b6fb04d65161bdc4d708b9b" "bcc6775934c9adf5f3bd1f428326ce0dcd34d743a92df48c128e6438b815b44f" "67e998c3c23fe24ed0fb92b9de75011b92f35d3e89344157ae0d544d50a63a72" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
+ '(flycheck-checkers
+   (quote
+    (tsx-tide typescript-tide ada-gnat asciidoctor asciidoc c/c++-clang c/c++-gcc c/c++-cppcheck cfengine chef-foodcritic coffee coffee-coffeelint coq css-csslint css-stylelint cuda-nvcc cwl d-dmd dockerfile-hadolint emacs-lisp emacs-lisp-checkdoc erlang-rebar3 erlang eruby-erubis fortran-gfortran go-gofmt go-golint go-vet go-build go-test go-errcheck go-unconvert go-megacheck go-staticcheck groovy haml handlebars haskell-stack-ghc haskell-ghc haskell-hlint html-tidy javascript-eslint javascript-jshint javascript-standard json-jsonlint json-python-json json-jq jsonnet less less-stylelint llvm-llc lua-luacheck lua markdown-markdownlint-cli markdown-mdl nix nix-linter opam perl perl-perlcritic php php-phpmd php-phpcs processing proselint protobuf-protoc pug puppet-parser puppet-lint python-flake8 python-pylint python-pycompile python-mypy r-lintr racket rpm-rpmlint rst-sphinx rst ruby-rubocop ruby-reek ruby-rubylint ruby ruby-jruby rust-cargo rust rust-clippy scala scala-scalastyle scheme-chicken scss-lint scss-stylelint sass/scss-sass-lint sass scss sh-bash sh-posix-dash sh-posix-bash sh-zsh sh-shellcheck slim slim-lint sql-sqlint systemd-analyze tcl-nagelfar tex-chktex tex-lacheck texinfo textlint typescript-tslint verilog-verilator vhdl-ghdl xml-xmlstarlet xml-xmllint yaml-jsyaml yaml-ruby javascript-tide jsx-tide)))
+ '(flycheck-highlighting-mode (quote lines))
+ '(global-flycheck-mode t)
  '(imenu-anywhere-buffer-filter-functions (quote (imenu-anywhere-same-project-p)))
  '(package-selected-packages
    (quote
-    (eyebrowse perspeen lsp-imenu lsp-python-ms lsp-mode lsp-java protobuf-mode dash dash-at-point ccls counsel-gtags company-gtags flymake-json smart-mode-line-powerline-theme js2-mode lsp-ui company-lsp lsp-javascript-typescript magit dockerfile-mode rjsx-mode rjsx indium js-comint helm-dash flymake-solidity solidity-mode go-mode projectile ivy buffer-move dracula-theme pyvenv nov imenu-anywhere counsel-dash rubocop mmm-jinja2 company ivy-gitlab gitlab mvn dired-quick-sort hydra dired+ lorem-ipsum swiper all-the-icons-ivy org org-brain undo-tree avy f s beacon vhdl-tools company-c-headers web-mode nodejs-repl mmm-mode better-shell py-autopep8 toml-mode tide dired-hacks-utils yaml-mode use-package typescript tablist sudo-edit spinner seq restclient queue powershell pdf-tools ox-pandoc org-present org-mobile-sync multi-eshell markdown-mode magit-gh-pulls know-your-http-well key-seq json-mode jinja2-mode ivy-hydra inf-ruby ido-vertical-mode hcl-mode golint go-eldoc go-autocomplete gist ggtags flycheck flx-ido exec-path-from-shell eshell-manual elpy dumb-jump counsel-projectile clojure-mode cl-lib-highlight ansible-doc ag)))
+    (yasnippet eyebrowse perspeen lsp-imenu lsp-python-ms lsp-mode lsp-java protobuf-mode dash dash-at-point ccls counsel-gtags company-gtags flymake-json smart-mode-line-powerline-theme js2-mode lsp-ui company-lsp lsp-javascript-typescript magit dockerfile-mode rjsx-mode rjsx indium js-comint helm-dash flymake-solidity solidity-mode go-mode projectile ivy buffer-move dracula-theme pyvenv nov imenu-anywhere counsel-dash rubocop mmm-jinja2 company ivy-gitlab gitlab mvn dired-quick-sort hydra dired+ lorem-ipsum swiper all-the-icons-ivy org org-brain undo-tree avy f s beacon vhdl-tools company-c-headers web-mode nodejs-repl mmm-mode better-shell py-autopep8 toml-mode tide dired-hacks-utils yaml-mode use-package typescript tablist sudo-edit spinner seq restclient queue powershell pdf-tools ox-pandoc org-present org-mobile-sync multi-eshell markdown-mode magit-gh-pulls know-your-http-well key-seq json-mode jinja2-mode ivy-hydra inf-ruby ido-vertical-mode hcl-mode golint go-eldoc go-autocomplete gist ggtags flycheck flx-ido exec-path-from-shell eshell-manual elpy dumb-jump counsel-projectile clojure-mode cl-lib-highlight ansible-doc ag)))
+ '(solidity-flycheck-solium-checker-active t)
  '(typescript-indent-level 2))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -699,11 +709,11 @@ _s_: bash strict mode
  '(variable-pitch ((t (:height 1.5 :family "Sans Serif")))))
 
 ;; adds /usr/local/bin to our PATH in eshell
-(add-to-list 'exec-path "/usr/local/bin")
+;; (add-to-list 'exec-path "/usr/local/bin")
 
 ;; makes eshell behave better displaying lots of text
-(setenv "PAGER" "cat")
-(setenv "TERM" "xterm-256color")
+;; (setenv "PAGER" "cat")
+;; (setenv "TERM" "xterm-256color")
 
 
 
@@ -901,26 +911,26 @@ SIZE :
 
 ;; copied from 
 ;; http://cestlaz.github.io/posts/using-emacs-34-ibuffer-emmet/#.WUQQcxN95E5
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-(setq ibuffer-saved-filter-groups
-      (quote (("default"
-               ("magit" (mode . magit-mode))
-	       ("dired" (mode . dired-mode))
-	       ("org" (name . "^.*org$"))
+;; (global-set-key (kbd "C-x C-b") 'ibuffer)
+;; (setq ibuffer-saved-filter-groups
+;;       (quote (("default"
+;;                ("magit" (mode . magit-mode))
+;; 	       ("dired" (mode . dired-mode))
+;; 	       ("org" (name . "^.*org$"))
 
-	       ;;("web" (or (mode . web-mode) (mode . js2-mode)))
-	       ("shell" (or (mode . eshell-mode) (mode . shell-mode)))
-	       ("programming" (or
-			       (mode . python-mode)
-			       (mode . c++-mode)))
-	       ("emacs" (or
-			 (name . "^\\*scratch\\*$")
-			 (name . "^\\*Messages\\*$")))
-	       ))))
-(add-hook 'ibuffer-mode-hook
-	  (lambda ()
-	    (ibuffer-auto-mode 1)
-	    (ibuffer-switch-to-saved-filter-groups "default")))
+;; 	       ;;("web" (or (mode . web-mode) (mode . js2-mode)))
+;; 	       ("shell" (or (mode . eshell-mode) (mode . shell-mode)))
+;; 	       ("programming" (or
+;; 			       (mode . python-mode)
+;; 			       (mode . c++-mode)))
+;; 	       ("emacs" (or
+;; 			 (name . "^\\*scratch\\*$")
+;; 			 (name . "^\\*Messages\\*$")))
+;; 	       ))))
+;; (add-hook 'ibuffer-mode-hook
+;; 	  (lambda ()
+;; 	    (ibuffer-auto-mode 1)
+;; 	    (ibuffer-switch-to-saved-filter-groups "default")))
 
 ;; don't show these
 					;(add-to-list 'ibuffer-never-show-predicates "zowie")
@@ -946,8 +956,8 @@ SIZE :
 
 
 ;; eshell stuff
-(setenv "JAVA_HOME"
-        "/Library/Java/JavaVirtualMachines/jdk1.8.0_73.jdk/Contents/Home")
+;; (setenv "JAVA_HOME"
+;;         "/Library/Java/JavaVirtualMachines/jdk1.8.0_73.jdk/Contents/Home")
 
 
 ;; Protect against accident pushes to upstream
@@ -1022,17 +1032,17 @@ Advice to `magit-push-current-to-upstream' triggers this query."
       (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode))
 
 
-(use-package counsel-dash
-  :ensure t
-  :config
-  (progn
-    (setq counsel-dash-docsets-path "~/.docset")
-    (setq counsel-dash-docsets-url "https://raw.github.com/Kapeli/feeds/master")
-    (setq counsel-dash-min-length 3)
-    (setq counsel-dash-candidate-format "%d %n (%t)")
-    (setq counsel-dash-enable-debugging nil)
-    (setq counsel-dash-browser-func 'eww-browse-url)
-    (setq counsel-dash-ignored-docsets nil)))
+;; (use-package counsel-dash
+;;   :ensure t
+;;   :config
+;;   (progn
+;;     (setq counsel-dash-docsets-path "~/.docset")
+;;     (setq counsel-dash-docsets-url "https://raw.github.com/Kapeli/feeds/master")
+;;     (setq counsel-dash-min-length 3)
+;;     (setq counsel-dash-candidate-format "%d %n (%t)")
+;;     (setq counsel-dash-enable-debugging nil)
+;;     (setq counsel-dash-browser-func 'eww-browse-url)
+;;     (setq counsel-dash-ignored-docsets nil)))
   
 
 ;; https://github.com/vspinu/imenu-anywhere
@@ -1072,25 +1082,23 @@ Advice to `magit-push-current-to-upstream' triggers this query."
   (progn
     (load-theme 'dracula t)))
 
-(defun eshell-here ()
-  "Opens up a new shell in the directory associated with the
-current buffer's file. The eshell is renamed to match that
-directory to make multiple eshell windows easier."
-  (interactive)
-  (let* ((parent (if (buffer-file-name)
-                     (file-name-directory (buffer-file-name))
-                   default-directory))
-         (height (/ (window-total-height) 3))
-         (name   (car (last (split-string parent "/" t)))))
-    (split-window-vertically (- height))
-    (other-window 1)
-    (eshell "new")
-    (rename-buffer (concat "*eshell: " name "*"))
+;; (defun eshell-here ()
+;;   "Opens up a new shell in the directory associated with the
+;; current buffer's file. The eshell is renamed to match that
+;; directory to make multiple eshell windows easier."
+;;   (interactive)
+;;   (let* ((parent (if (buffer-file-name)
+;;                      (file-name-directory (buffer-file-name))
+;;                    default-directory))
+;;          (height (/ (window-total-height) 3))
+;;          (name   (car (last (split-string parent "/" t)))))
+;;     (split-window-vertically (- height))
+;;     (other-window 1)
+;;     (eshell "new")
+;;     (rename-buffer (concat "*eshell: " name "*"))
 
-    (insert (concat "ls"))
-    (eshell-send-input)))
-
-(bind-key "C-!" 'eshell-here)
+;;     (insert (concat "ls"))
+;;     (eshell-send-input)))
 
 
 (defun remove-newlines-in-region ()
@@ -1102,120 +1110,122 @@ directory to make multiple eshell windows easier."
     (while (search-forward "\n" nil t) (replace-match "" nil t))))
 
 
+;; (bind-key "C-!" 'eshell-here)
+
 ;; https://emacs.stackexchange.com/a/33252
 ;; node repl vomits on the backspace key
-(require 'term)
-(defun term-handle-ansi-escape (proc char)
-  (cond
-   ((or (eq char ?H)  ;; cursor motion (terminfo: cup,home)
-    ;; (eq char ?f) ;; xterm seems to handle this sequence too, not
-    ;; needed for now
-    )
-    (when (<= term-terminal-parameter 0)
-      (setq term-terminal-parameter 1))
-    (when (<= term-terminal-previous-parameter 0)
-      (setq term-terminal-previous-parameter 1))
-    (when (> term-terminal-previous-parameter term-height)
-      (setq term-terminal-previous-parameter term-height))
-    (when (> term-terminal-parameter term-width)
-      (setq term-terminal-parameter term-width))
-    (term-goto
-     (1- term-terminal-previous-parameter)
-     (1- term-terminal-parameter)))
-   ;; \E[A - cursor up (terminfo: cuu, cuu1)
-   ((eq char ?A)
-    (term-handle-deferred-scroll)
-    (let ((tcr (term-current-row)))
-      (term-down
-       (if (< (- tcr term-terminal-parameter) term-scroll-start)
-       ;; If the amount to move is before scroll start, move
-       ;; to scroll start.
-       (- term-scroll-start tcr)
-     (if (>= term-terminal-parameter tcr)
-         (- tcr)
-       (- (max 1 term-terminal-parameter)))) t)))
-   ;; \E[B - cursor down (terminfo: cud)
-   ((eq char ?B)
-    (let ((tcr (term-current-row)))
-      (unless (= tcr (1- term-scroll-end))
-    (term-down
-     (if (> (+ tcr term-terminal-parameter) term-scroll-end)
-         (- term-scroll-end 1 tcr)
-       (max 1 term-terminal-parameter)) t))))
-   ;; \E[C - cursor right (terminfo: cuf, cuf1)
-   ((eq char ?C)
-    (term-move-columns
-     (max 1
-      (if (>= (+ term-terminal-parameter (term-current-column)) term-width)
-          (- term-width (term-current-column)  1)
-        term-terminal-parameter))))
-   ;; \E[D - cursor left (terminfo: cub)
-   ((eq char ?D)
-    (term-move-columns (- (max 1 term-terminal-parameter))))
-   ((eq char ?G)
-    (term-move-columns (- (max 0 (min term-width term-terminal-parameter))
-                          (term-current-column))))
-   ;; \E[J - clear to end of screen (terminfo: ed, clear)
-   ((eq char ?J)
-    (term-erase-in-display term-terminal-parameter))
-   ;; \E[K - clear to end of line (terminfo: el, el1)
-   ((eq char ?K)
-    (term-erase-in-line term-terminal-parameter))
-   ;; \E[L - insert lines (terminfo: il, il1)
-   ((eq char ?L)
-    (term-insert-lines (max 1 term-terminal-parameter)))
-   ;; \E[M - delete lines (terminfo: dl, dl1)
-   ((eq char ?M)
-    (term-delete-lines (max 1 term-terminal-parameter)))
-   ;; \E[P - delete chars (terminfo: dch, dch1)
-   ((eq char ?P)
-    (term-delete-chars (max 1 term-terminal-parameter)))
-   ;; \E[@ - insert spaces (terminfo: ich)
-   ((eq char ?@)
-    (term-insert-spaces (max 1 term-terminal-parameter)))
-   ;; \E[?h - DEC Private Mode Set
-   ((eq char ?h)
-    (cond ((eq term-terminal-parameter 4)  ;; (terminfo: smir)
-       (setq term-insert-mode t))
-      ;; ((eq term-terminal-parameter 47) ;; (terminfo: smcup)
-      ;; (term-switch-to-alternate-sub-buffer t))
-      ))
-   ;; \E[?l - DEC Private Mode Reset
-   ((eq char ?l)
-    (cond ((eq term-terminal-parameter 4)  ;; (terminfo: rmir)
-       (setq term-insert-mode nil))
-      ;; ((eq term-terminal-parameter 47) ;; (terminfo: rmcup)
-      ;; (term-switch-to-alternate-sub-buffer nil))
-      ))
+;; (require 'term)
+;; (defun term-handle-ansi-escape (proc char)
+;;   (cond
+;;    ((or (eq char ?H)  ;; cursor motion (terminfo: cup,home)
+;;     ;; (eq char ?f) ;; xterm seems to handle this sequence too, not
+;;     ;; needed for now
+;;     )
+;;     (when (<= term-terminal-parameter 0)
+;;       (setq term-terminal-parameter 1))
+;;     (when (<= term-terminal-previous-parameter 0)
+;;       (setq term-terminal-previous-parameter 1))
+;;     (when (> term-terminal-previous-parameter term-height)
+;;       (setq term-terminal-previous-parameter term-height))
+;;     (when (> term-terminal-parameter term-width)
+;;       (setq term-terminal-parameter term-width))
+;;     (term-goto
+;;      (1- term-terminal-previous-parameter)
+;;      (1- term-terminal-parameter)))
+;;    ;; \E[A - cursor up (terminfo: cuu, cuu1)
+;;    ((eq char ?A)
+;;     (term-handle-deferred-scroll)
+;;     (let ((tcr (term-current-row)))
+;;       (term-down
+;;        (if (< (- tcr term-terminal-parameter) term-scroll-start)
+;;        ;; If the amount to move is before scroll start, move
+;;        ;; to scroll start.
+;;        (- term-scroll-start tcr)
+;;      (if (>= term-terminal-parameter tcr)
+;;          (- tcr)
+;;        (- (max 1 term-terminal-parameter)))) t)))
+;;    ;; \E[B - cursor down (terminfo: cud)
+;;    ((eq char ?B)
+;;     (let ((tcr (term-current-row)))
+;;       (unless (= tcr (1- term-scroll-end))
+;;     (term-down
+;;      (if (> (+ tcr term-terminal-parameter) term-scroll-end)
+;;          (- term-scroll-end 1 tcr)
+;;        (max 1 term-terminal-parameter)) t))))
+;;    ;; \E[C - cursor right (terminfo: cuf, cuf1)
+;;    ((eq char ?C)
+;;     (term-move-columns
+;;      (max 1
+;;       (if (>= (+ term-terminal-parameter (term-current-column)) term-width)
+;;           (- term-width (term-current-column)  1)
+;;         term-terminal-parameter))))
+;;    ;; \E[D - cursor left (terminfo: cub)
+;;    ((eq char ?D)
+;;     (term-move-columns (- (max 1 term-terminal-parameter))))
+;;    ((eq char ?G)
+;;     (term-move-columns (- (max 0 (min term-width term-terminal-parameter))
+;;                           (term-current-column))))
+;;    ;; \E[J - clear to end of screen (terminfo: ed, clear)
+;;    ((eq char ?J)
+;;     (term-erase-in-display term-terminal-parameter))
+;;    ;; \E[K - clear to end of line (terminfo: el, el1)
+;;    ((eq char ?K)
+;;     (term-erase-in-line term-terminal-parameter))
+;;    ;; \E[L - insert lines (terminfo: il, il1)
+;;    ((eq char ?L)
+;;     (term-insert-lines (max 1 term-terminal-parameter)))
+;;    ;; \E[M - delete lines (terminfo: dl, dl1)
+;;    ((eq char ?M)
+;;     (term-delete-lines (max 1 term-terminal-parameter)))
+;;    ;; \E[P - delete chars (terminfo: dch, dch1)
+;;    ((eq char ?P)
+;;     (term-delete-chars (max 1 term-terminal-parameter)))
+;;    ;; \E[@ - insert spaces (terminfo: ich)
+;;    ((eq char ?@)
+;;     (term-insert-spaces (max 1 term-terminal-parameter)))
+;;    ;; \E[?h - DEC Private Mode Set
+;;    ((eq char ?h)
+;;     (cond ((eq term-terminal-parameter 4)  ;; (terminfo: smir)
+;;        (setq term-insert-mode t))
+;;       ;; ((eq term-terminal-parameter 47) ;; (terminfo: smcup)
+;;       ;; (term-switch-to-alternate-sub-buffer t))
+;;       ))
+;;    ;; \E[?l - DEC Private Mode Reset
+;;    ((eq char ?l)
+;;     (cond ((eq term-terminal-parameter 4)  ;; (terminfo: rmir)
+;;        (setq term-insert-mode nil))
+;;       ;; ((eq term-terminal-parameter 47) ;; (terminfo: rmcup)
+;;       ;; (term-switch-to-alternate-sub-buffer nil))
+;;       ))
 
-   ;; Modified to allow ansi coloring -mm
-   ;; \E[m - Set/reset modes, set bg/fg
-   ;;(terminfo: smso,rmso,smul,rmul,rev,bold,sgr0,invis,op,setab,setaf)
-   ((eq char ?m)
-    (when (= term-terminal-more-parameters 1)
-      (when (>= term-terminal-previous-parameter-4 0)
-    (term-handle-colors-array term-terminal-previous-parameter-4))
-      (when (>= term-terminal-previous-parameter-3 0)
-    (term-handle-colors-array term-terminal-previous-parameter-3))
-      (when (>= term-terminal-previous-parameter-2 0)
-    (term-handle-colors-array term-terminal-previous-parameter-2))
-      (term-handle-colors-array term-terminal-previous-parameter))
-    (term-handle-colors-array term-terminal-parameter))
+;;    ;; Modified to allow ansi coloring -mm
+;;    ;; \E[m - Set/reset modes, set bg/fg
+;;    ;;(terminfo: smso,rmso,smul,rmul,rev,bold,sgr0,invis,op,setab,setaf)
+;;    ((eq char ?m)
+;;     (when (= term-terminal-more-parameters 1)
+;;       (when (>= term-terminal-previous-parameter-4 0)
+;;     (term-handle-colors-array term-terminal-previous-parameter-4))
+;;       (when (>= term-terminal-previous-parameter-3 0)
+;;     (term-handle-colors-array term-terminal-previous-parameter-3))
+;;       (when (>= term-terminal-previous-parameter-2 0)
+;;     (term-handle-colors-array term-terminal-previous-parameter-2))
+;;       (term-handle-colors-array term-terminal-previous-parameter))
+;;     (term-handle-colors-array term-terminal-parameter))
 
-   ;; \E[6n - Report cursor position (terminfo: u7)
-   ((eq char ?n)
-    (term-handle-deferred-scroll)
-    (process-send-string proc
-             ;; (terminfo: u6)
-             (format "\e[%s;%sR"
-                 (1+ (term-current-row))
-                 (1+ (term-horizontal-column)))))
-   ;; \E[r - Set scrolling region (terminfo: csr)
-   ((eq char ?r)
-    (term-set-scroll-region
-     (1- term-terminal-previous-parameter)
-     (1- term-terminal-parameter)))
-   (t)))
+;;    ;; \E[6n - Report cursor position (terminfo: u7)
+;;    ((eq char ?n)
+;;     (term-handle-deferred-scroll)
+;;     (process-send-string proc
+;;              ;; (terminfo: u6)
+;;              (format "\e[%s;%sR"
+;;                  (1+ (term-current-row))
+;;                  (1+ (term-horizontal-column)))))
+;;    ;; \E[r - Set scrolling region (terminfo: csr)
+;;    ((eq char ?r)
+;;     (term-set-scroll-region
+;;      (1- term-terminal-previous-parameter)
+;;      (1- term-terminal-parameter)))
+;;    (t)))
 
 
 ;; only ask once to delete a set of directories
@@ -1246,5 +1256,9 @@ Uses `bwb-timestamp-format' for formatting the date/time."
 ;; desktop-save
 ;; https://www.emacswiki.org/emacs/Desktop
 ;; http://pragmaticemacs.com/emacs/save-window-layouts-with-ivy-view/
-(desktop-save-mode 1)
-(add-to-list 'desktop-globals-to-save 'ivy-views)
+;;(desktop-save-mode 1)
+;;(add-to-list 'desktop-globals-to-save 'ivy-views)
+
+
+(add-to-list 'load-path "/home/hitman/local/emacs-libvterm")
+(require 'vterm)
