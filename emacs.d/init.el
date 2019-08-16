@@ -1,10 +1,5 @@
 ;; This is an emacs file I created to customize emacs
 ;; The settings should take effect on emacs start-up
-;; emacs installation
-;; https://github.com/d12frosted/homebrew-emacs-plus
-;;  $ brew tap d12frosted/emacs-plus
-;;  $ brew install emacs-plus --without-spacemacs-icon
-;;  $ brew link --overwrite emacs-plus
 ;; compilation on fedora
 ;; curl from http://gnu.mirror.globo.tech/emacs/ and untar
 ;;  $ ./autogen.sh
@@ -16,7 +11,8 @@
 
 
 ;; Global keymappings for sanity
-;; M-o toggle todo status
+;; M-o toggle vterm
+;; M-j toggle vterm copy mode
 ;; C-` 'magit-status
 ;; C-f 'projectile-command-map, i.e. projectile hot-key
 ;; C-f l 'projectile-find-file-other-window
@@ -698,7 +694,7 @@ _s_: bash strict mode
  '(imenu-anywhere-buffer-filter-functions (quote (imenu-anywhere-same-project-p)))
  '(package-selected-packages
    (quote
-    (yasnippet eyebrowse perspeen lsp-imenu lsp-python-ms lsp-mode lsp-java protobuf-mode dash dash-at-point ccls counsel-gtags company-gtags flymake-json smart-mode-line-powerline-theme js2-mode lsp-ui company-lsp lsp-javascript-typescript magit dockerfile-mode rjsx-mode rjsx indium js-comint helm-dash flymake-solidity solidity-mode go-mode projectile ivy buffer-move dracula-theme pyvenv nov imenu-anywhere counsel-dash rubocop mmm-jinja2 company ivy-gitlab gitlab mvn dired-quick-sort hydra dired+ lorem-ipsum swiper all-the-icons-ivy org org-brain undo-tree avy f s beacon vhdl-tools company-c-headers web-mode nodejs-repl mmm-mode better-shell py-autopep8 toml-mode tide dired-hacks-utils yaml-mode use-package typescript tablist sudo-edit spinner seq restclient queue powershell pdf-tools ox-pandoc org-present org-mobile-sync multi-eshell markdown-mode magit-gh-pulls know-your-http-well key-seq json-mode jinja2-mode ivy-hydra inf-ruby ido-vertical-mode hcl-mode golint go-eldoc go-autocomplete gist ggtags flycheck flx-ido exec-path-from-shell eshell-manual elpy dumb-jump counsel-projectile clojure-mode cl-lib-highlight ansible-doc ag)))
+    (vterm-toggle yasnippet eyebrowse perspeen lsp-imenu lsp-python-ms lsp-mode lsp-java protobuf-mode dash dash-at-point ccls counsel-gtags company-gtags flymake-json smart-mode-line-powerline-theme js2-mode lsp-ui company-lsp lsp-javascript-typescript magit dockerfile-mode rjsx-mode rjsx indium js-comint helm-dash flymake-solidity solidity-mode go-mode projectile ivy buffer-move dracula-theme pyvenv nov imenu-anywhere counsel-dash rubocop mmm-jinja2 company ivy-gitlab gitlab mvn dired-quick-sort hydra dired+ lorem-ipsum swiper all-the-icons-ivy org org-brain undo-tree avy f s beacon vhdl-tools company-c-headers web-mode nodejs-repl mmm-mode better-shell py-autopep8 toml-mode tide dired-hacks-utils yaml-mode use-package typescript tablist sudo-edit spinner seq restclient queue powershell pdf-tools ox-pandoc org-present org-mobile-sync multi-eshell markdown-mode magit-gh-pulls know-your-http-well key-seq json-mode jinja2-mode ivy-hydra inf-ruby ido-vertical-mode hcl-mode golint go-eldoc go-autocomplete gist ggtags flycheck flx-ido exec-path-from-shell eshell-manual elpy dumb-jump counsel-projectile clojure-mode cl-lib-highlight ansible-doc ag)))
  '(solidity-flycheck-solium-checker-active t)
  '(typescript-indent-level 2))
 (custom-set-faces
@@ -1259,6 +1255,16 @@ Uses `bwb-timestamp-format' for formatting the date/time."
 ;;(desktop-save-mode 1)
 ;;(add-to-list 'desktop-globals-to-save 'ivy-views)
 
+;; from https://github.com/akermu/emacs-libvterm
+;; and https://github.com/jixiuf/vterm-toggle
+(use-package vterm-toggle
+  :ensure t
+  :config
+  (progn
+    (add-to-list 'load-path "/home/hitman/local/emacs-libvterm")
+    (require 'vterm)
+    (define-key global-map (kbd "M-o") 'vterm-toggle-cd)
+    (define-key vterm-mode-map (kbd "M-j") 'vterm-copy-mode)
+    (define-key vterm-copy-mode-map (kbd "M-j") 'vterm-copy-mode)))
 
-(add-to-list 'load-path "/home/hitman/local/emacs-libvterm")
-(require 'vterm)
+;;; init.el ends here
