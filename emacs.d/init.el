@@ -64,6 +64,21 @@
 
 (require 'use-package)
 
+;; shell config
+;; from https://github.com/akermu/emacs-libvterm
+;; and https://github.com/jixiuf/vterm-toggle
+(use-package vterm-toggle
+  :ensure t
+  :config
+  (progn
+    (add-to-list 'load-path "/home/hitman/local/emacs-libvterm")
+    (require 'vterm)
+    (define-key global-map (kbd "M-o") 'vterm-toggle-cd)
+    (define-key vterm-mode-map (kbd "M-j") 'vterm-copy-mode)
+    (define-key vterm-mode-map (kbd "C-j") 'ivy-switch-buffer)
+    (define-key vterm-mode-map (kbd "C-l") 'other-window)
+    (define-key vterm-copy-mode-map (kbd "M-j") 'vterm-copy-mode)))
+
 (use-package beacon
   :ensure t
   :config
@@ -105,6 +120,22 @@
 (use-package dap-java :after (lsp-java))
 (use-package lsp-java-treemacs :after (treemacs))
 
+;; need to configure local sshd for this to work
+;; (use-package sudo-edit
+;;   :ensure t)
+  
+;; this doesn't work
+;; (use-package dired-toggle-sudo
+;;   :ensure t
+;;   :config
+;;   (progn
+;;     (define-key dired-mode-map (kbd "C-c C-s") 'dired-toggle-sudo)
+;;     (eval-after-load 'tramp
+;;       '(progn
+;;          ;; Allow to use: /sudo:user@host:/path/to/file
+;;          (add-to-list 'tramp-default-proxies-alist
+;;                       '(".*" "\\`.+\\'" "/ssh:%h:"))))))
+    
 
 
 ;; (use-package exec-path-from-shell
@@ -257,8 +288,9 @@
 
 ;; I am too cool to use scroll bar and tool bar!
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(menu-bar-mode 0)
+;; don't disable menu bar and toolbar, useful for gdb
+;; (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+;; (menu-bar-mode 0)
 
 ;; key bindings
 (when (eq system-type 'darwin) ;; mac specific settings
@@ -317,9 +349,10 @@
 
 ;; turn off all menus
 (progn
-  (menu-bar-mode -1)
-  (when (fboundp 'tool-bar-mode)
-    (tool-bar-mode -1))
+  ;; the toolbar and menubaris useful for gdb
+  ;; (menu-bar-mode -1)
+  ;; (when (fboundp 'tool-bar-mode)
+  ;;   (tool-bar-mode -1))
   (when (fboundp 'scroll-bar-mode)
     (scroll-bar-mode -1))
 
@@ -694,7 +727,7 @@ _s_: bash strict mode
  '(imenu-anywhere-buffer-filter-functions (quote (imenu-anywhere-same-project-p)))
  '(package-selected-packages
    (quote
-    (vterm-toggle yasnippet eyebrowse perspeen lsp-imenu lsp-python-ms lsp-mode lsp-java protobuf-mode dash dash-at-point ccls counsel-gtags company-gtags flymake-json smart-mode-line-powerline-theme js2-mode lsp-ui company-lsp lsp-javascript-typescript magit dockerfile-mode rjsx-mode rjsx indium js-comint helm-dash flymake-solidity solidity-mode go-mode projectile ivy buffer-move dracula-theme pyvenv nov imenu-anywhere counsel-dash rubocop mmm-jinja2 company ivy-gitlab gitlab mvn dired-quick-sort hydra dired+ lorem-ipsum swiper all-the-icons-ivy org org-brain undo-tree avy f s beacon vhdl-tools company-c-headers web-mode nodejs-repl mmm-mode better-shell py-autopep8 toml-mode tide dired-hacks-utils yaml-mode use-package typescript tablist sudo-edit spinner seq restclient queue powershell pdf-tools ox-pandoc org-present org-mobile-sync multi-eshell markdown-mode magit-gh-pulls know-your-http-well key-seq json-mode jinja2-mode ivy-hydra inf-ruby ido-vertical-mode hcl-mode golint go-eldoc go-autocomplete gist ggtags flycheck flx-ido exec-path-from-shell eshell-manual elpy dumb-jump counsel-projectile clojure-mode cl-lib-highlight ansible-doc ag)))
+    (dired-toggle-sudo vterm-toggle yasnippet eyebrowse perspeen lsp-imenu lsp-python-ms lsp-mode lsp-java protobuf-mode dash dash-at-point ccls counsel-gtags company-gtags flymake-json smart-mode-line-powerline-theme js2-mode lsp-ui company-lsp lsp-javascript-typescript magit dockerfile-mode rjsx-mode rjsx indium js-comint helm-dash flymake-solidity solidity-mode go-mode projectile ivy buffer-move dracula-theme pyvenv nov imenu-anywhere counsel-dash rubocop mmm-jinja2 company ivy-gitlab gitlab mvn dired-quick-sort hydra dired+ lorem-ipsum swiper all-the-icons-ivy org org-brain undo-tree avy f s beacon vhdl-tools company-c-headers web-mode nodejs-repl mmm-mode better-shell py-autopep8 toml-mode tide dired-hacks-utils yaml-mode use-package typescript tablist sudo-edit spinner seq restclient queue powershell pdf-tools ox-pandoc org-present org-mobile-sync multi-eshell markdown-mode magit-gh-pulls know-your-http-well key-seq json-mode jinja2-mode ivy-hydra inf-ruby ido-vertical-mode hcl-mode golint go-eldoc go-autocomplete gist ggtags flycheck flx-ido exec-path-from-shell eshell-manual elpy dumb-jump counsel-projectile clojure-mode cl-lib-highlight ansible-doc ag)))
  '(solidity-flycheck-solium-checker-active t)
  '(typescript-indent-level 2))
 (custom-set-faces
@@ -766,6 +799,7 @@ SIZE :
   (use-package lsp-mode :commands lsp)
   (use-package lsp-ui :commands lsp-ui-mode)
   (use-package company-lsp :commands company-lsp)
+  (setq xref-backend-functions 'lsp--xref-backend)
   (setq ccls-executable "/home/hitman/bin/ccls"))
 
 ;; ;; use indium instead of nodejs-repl
@@ -1242,6 +1276,11 @@ Uses `bwb-timestamp-format' for formatting the date/time."
        (insert (format-time-string bwb-timestamp-format (current-time)))
        )
 
+;; https://www.reddit.com/r/emacs/comments/bjrd3f/how_can_i_unlock_folder_from_lspmode_blacklist/?ref=readnext
+(defun bwb-clear-lsp-blacklist ()
+  (interactive)
+  (setf (lsp-session-folders-blacklist (lsp-session)) nil)
+  (lsp--persist-session (lsp-session)))
 
 ;; require confirmation before closing emacs
 (add-hook 'kill-emacs-query-functions
@@ -1254,17 +1293,5 @@ Uses `bwb-timestamp-format' for formatting the date/time."
 ;; http://pragmaticemacs.com/emacs/save-window-layouts-with-ivy-view/
 ;;(desktop-save-mode 1)
 ;;(add-to-list 'desktop-globals-to-save 'ivy-views)
-
-;; from https://github.com/akermu/emacs-libvterm
-;; and https://github.com/jixiuf/vterm-toggle
-(use-package vterm-toggle
-  :ensure t
-  :config
-  (progn
-    (add-to-list 'load-path "/home/hitman/local/emacs-libvterm")
-    (require 'vterm)
-    (define-key global-map (kbd "M-o") 'vterm-toggle-cd)
-    (define-key vterm-mode-map (kbd "M-j") 'vterm-copy-mode)
-    (define-key vterm-copy-mode-map (kbd "M-j") 'vterm-copy-mode)))
 
 ;;; init.el ends here
