@@ -121,25 +121,18 @@
 (use-package lsp-java-treemacs :after (treemacs))
 
 ;; need to configure local sshd for this to work
-;; (use-package sudo-edit
-;;   :ensure t)
-  
-;; this doesn't work
-;; (use-package dired-toggle-sudo
-;;   :ensure t
-;;   :config
-;;   (progn
-;;     (define-key dired-mode-map (kbd "C-c C-s") 'dired-toggle-sudo)
-;;     (eval-after-load 'tramp
-;;       '(progn
-;;          ;; Allow to use: /sudo:user@host:/path/to/file
-;;          (add-to-list 'tramp-default-proxies-alist
-;;                       '(".*" "\\`.+\\'" "/ssh:%h:"))))))
-    
+(use-package sudo-edit
+  :ensure t)
 
-
-;; (use-package exec-path-from-shell
-;;   :ensure t)
+;; this uses the forked version w/ a bug fix
+;; https://raw.githubusercontent.com/eryx67/dired-toggle-sudo/master/dired-toggle-sudo.el
+(require 'dired-toggle-sudo)
+(define-key dired-mode-map (kbd "C-c C-s") 'dired-toggle-sudo)
+(eval-after-load 'tramp
+  '(progn
+     ;; Allow to use: /sudo:user@host:/path/to/file
+     (add-to-list 'tramp-default-proxies-alist
+		  '(".*" "\\`.+\\'" "/ssh:%h:"))))
 
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
@@ -160,7 +153,7 @@
     (setq ivy-display-style 'fancy)
     (setq ivy-virtual-abbreviate 'full)
     (setq magit-completing-read-function 'ivy-completing-read)
-    (define-key ivy-minibuffer-map (kbd "C-c j") 'ivy-immediate-done)
+   (define-key ivy-minibuffer-map (kbd "C-c j") 'ivy-immediate-done)
     (global-set-key (kbd "C-c C-r") 'ivy-resume)
     (global-set-key (kbd "C-j") 'ivy-switch-buffer)
     (add-hook 'view-mode-hook
@@ -214,6 +207,19 @@
 
 (use-package ivy-hydra
   :ensure t)
+
+(use-package ivy-posframe
+  :ensure t
+  :config
+  (require 'ivy-posframe)
+  ;; display at `ivy-posframe-style'
+  ;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display)))
+  (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
+  ;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-window-center)))
+  ;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-bottom-left)))
+  ;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-window-bottom-left)))
+  ;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-top-center)))
+  (ivy-posframe-mode 1))
 
 ;; there is a special case for Makefile mode that doesn't work properly with the indent-according-to-mode function
 (defun bwb-indent-or-complete ()
@@ -723,11 +729,12 @@ _s_: bash strict mode
    (quote
     (tsx-tide typescript-tide ada-gnat asciidoctor asciidoc c/c++-clang c/c++-gcc c/c++-cppcheck cfengine chef-foodcritic coffee coffee-coffeelint coq css-csslint css-stylelint cuda-nvcc cwl d-dmd dockerfile-hadolint emacs-lisp emacs-lisp-checkdoc erlang-rebar3 erlang eruby-erubis fortran-gfortran go-gofmt go-golint go-vet go-build go-test go-errcheck go-unconvert go-megacheck go-staticcheck groovy haml handlebars haskell-stack-ghc haskell-ghc haskell-hlint html-tidy javascript-eslint javascript-jshint javascript-standard json-jsonlint json-python-json json-jq jsonnet less less-stylelint llvm-llc lua-luacheck lua markdown-markdownlint-cli markdown-mdl nix nix-linter opam perl perl-perlcritic php php-phpmd php-phpcs processing proselint protobuf-protoc pug puppet-parser puppet-lint python-flake8 python-pylint python-pycompile python-mypy r-lintr racket rpm-rpmlint rst-sphinx rst ruby-rubocop ruby-reek ruby-rubylint ruby ruby-jruby rust-cargo rust rust-clippy scala scala-scalastyle scheme-chicken scss-lint scss-stylelint sass/scss-sass-lint sass scss sh-bash sh-posix-dash sh-posix-bash sh-zsh sh-shellcheck slim slim-lint sql-sqlint systemd-analyze tcl-nagelfar tex-chktex tex-lacheck texinfo textlint typescript-tslint verilog-verilator vhdl-ghdl xml-xmlstarlet xml-xmllint yaml-jsyaml yaml-ruby javascript-tide jsx-tide)))
  '(flycheck-highlighting-mode (quote lines))
+ '(gdb-many-windows t)
  '(global-flycheck-mode t)
  '(imenu-anywhere-buffer-filter-functions (quote (imenu-anywhere-same-project-p)))
  '(package-selected-packages
    (quote
-    (dired-toggle-sudo vterm-toggle yasnippet eyebrowse perspeen lsp-imenu lsp-python-ms lsp-mode lsp-java protobuf-mode dash dash-at-point ccls counsel-gtags company-gtags flymake-json smart-mode-line-powerline-theme js2-mode lsp-ui company-lsp lsp-javascript-typescript magit dockerfile-mode rjsx-mode rjsx indium js-comint helm-dash flymake-solidity solidity-mode go-mode projectile ivy buffer-move dracula-theme pyvenv nov imenu-anywhere counsel-dash rubocop mmm-jinja2 company ivy-gitlab gitlab mvn dired-quick-sort hydra dired+ lorem-ipsum swiper all-the-icons-ivy org org-brain undo-tree avy f s beacon vhdl-tools company-c-headers web-mode nodejs-repl mmm-mode better-shell py-autopep8 toml-mode tide dired-hacks-utils yaml-mode use-package typescript tablist sudo-edit spinner seq restclient queue powershell pdf-tools ox-pandoc org-present org-mobile-sync multi-eshell markdown-mode magit-gh-pulls know-your-http-well key-seq json-mode jinja2-mode ivy-hydra inf-ruby ido-vertical-mode hcl-mode golint go-eldoc go-autocomplete gist ggtags flycheck flx-ido exec-path-from-shell eshell-manual elpy dumb-jump counsel-projectile clojure-mode cl-lib-highlight ansible-doc ag)))
+    (counsel ivy-posframe flycheck-rust cargo vterm-toggle yasnippet eyebrowse perspeen lsp-imenu lsp-python-ms lsp-mode lsp-java protobuf-mode dash dash-at-point ccls counsel-gtags company-gtags flymake-json smart-mode-line-powerline-theme js2-mode lsp-ui company-lsp lsp-javascript-typescript magit dockerfile-mode rjsx-mode rjsx indium js-comint helm-dash flymake-solidity solidity-mode go-mode projectile ivy buffer-move dracula-theme pyvenv nov imenu-anywhere counsel-dash rubocop mmm-jinja2 company ivy-gitlab gitlab mvn dired-quick-sort hydra dired+ lorem-ipsum swiper all-the-icons-ivy org org-brain undo-tree avy f s beacon vhdl-tools company-c-headers web-mode nodejs-repl mmm-mode better-shell py-autopep8 toml-mode tide dired-hacks-utils yaml-mode use-package typescript tablist sudo-edit spinner seq restclient queue powershell pdf-tools ox-pandoc org-present org-mobile-sync multi-eshell markdown-mode magit-gh-pulls know-your-http-well key-seq json-mode jinja2-mode ivy-hydra inf-ruby ido-vertical-mode hcl-mode golint go-eldoc go-autocomplete gist ggtags flycheck flx-ido exec-path-from-shell eshell-manual elpy dumb-jump counsel-projectile clojure-mode cl-lib-highlight ansible-doc ag)))
  '(solidity-flycheck-solium-checker-active t)
  '(typescript-indent-level 2))
 (custom-set-faces
@@ -1294,4 +1301,25 @@ Uses `bwb-timestamp-format' for formatting the date/time."
 ;;(desktop-save-mode 1)
 ;;(add-to-list 'desktop-globals-to-save 'ivy-views)
 
+
+;; Rust setup
+;; taken largely from here https://www.mortens.dev/blog/emacs-and-the-language-server-protocol/
+(use-package cargo :ensure t)
+(use-package flycheck-rust :ensure t)
+
+(use-package rust-mode
+  :requires cargo hydra flycheck-rust
+  :config
+  (add-to-list 'auto-mode-alist '("\\.rs$" . rust-mode))
+  (add-to-list 'exec-path "/home/hitman/.cargo/bin")
+  ;; (with-eval-after-load 'flycheck
+  ;;   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+  (with-eval-after-load 'rust-mode
+    (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+  (with-eval-after-load 'lsp
+    (add-hook 'rust-mode-hook #'lsp)))
+  
+
 ;;; init.el ends here
+
+
