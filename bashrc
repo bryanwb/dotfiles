@@ -205,3 +205,6 @@ if [ -f '/home/hitman/local/google-cloud-sdk/path.bash.inc' ]; then . '/home/hit
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/hitman/local/google-cloud-sdk/completion.bash.inc' ]; then . '/home/hitman/local/google-cloud-sdk/completion.bash.inc'; fi
 
+export PYTHONPATH=$PYTHONPATH:/home/hitman/local/uvtool/
+source ~/.cargo/env
+export PATH=$PATH:/home/hitman/.local/bin/
