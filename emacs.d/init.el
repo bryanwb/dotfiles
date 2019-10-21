@@ -295,8 +295,8 @@
 ;; I am too cool to use scroll bar and tool bar!
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 ;; don't disable menu bar and toolbar, useful for gdb
-;; (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-;; (menu-bar-mode 0)
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(menu-bar-mode 0)
 
 ;; key bindings
 (when (eq system-type 'darwin) ;; mac specific settings
