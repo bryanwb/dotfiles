@@ -39,6 +39,11 @@
 ;; cgg 'counsel-git-grep
 
 
+;; for some reason setting this to nil, stops emacs from hanging on kill-line
+;; https://github.com/syl20bnr/spacemacs/issues/6752
+;; added 16 March 2020
+(setq x-select-enable-clipboard nil)
+
 ;; passwords go in this private file
 ;; currently hold gitlab secrets
 (load "~/dotfiles/secrets/secrets.el")
@@ -73,6 +78,7 @@
   (progn
     (add-to-list 'load-path "/home/hitman/local/emacs-libvterm")
     (require 'vterm)
+    (setq vterm-shell "/usr/bin/nu")
     (define-key global-map (kbd "M-o") 'vterm-toggle-cd)
     (define-key vterm-mode-map (kbd "M-j") 'vterm-copy-mode)
     (define-key vterm-mode-map (kbd "C-j") 'ivy-switch-buffer)
@@ -98,18 +104,18 @@
 ;; java setup
 ;; taken from http://www.skybert.net/emacs/enterprise-java-development-in-emacs/
 ;; extra setup, download eclipse jdt and unpack manually to ~/.lsp-java-jdk
-(use-package treemacs
-  :ensure t)
+;; (use-package treemacs
+;;   :ensure t)
 
-(use-package lsp-java
-  :ensure t
-  :after lsp
-  :config
-  (progn
-    (setq lsp-java-java-path "/usr/lib/jvm/java-9-openjdk-9.0.4.11-6.fc28.x86_64/bin/java")
-    (setq lsp-java-server-install-dir "/home/hitman/.lsp-java-jdt/")
-    (add-hook 'java-mode-hook 'lsp)
-    ))
+;; (use-package lsp-java
+;;   :ensure t
+;;   :after lsp
+;;   :config
+;;   (progn
+;;     (setq lsp-java-java-path "/usr/lib/jvm/java-9-openjdk-9.0.4.11-6.fc28.x86_64/bin/java")
+;;     (setq lsp-java-server-install-dir "/home/hitman/.lsp-java-jdt/")
+;;     (add-hook 'java-mode-hook 'lsp)
+;;     ))
 
 (use-package dap-mode
   :ensure t :after lsp-mode
@@ -496,8 +502,8 @@
               (lsp-ui-flycheck-enable t)
               ;; this causes incredible slowness for some reason
               (lsp-ui-sideline-enable nil)
-              (setq python-shell-interpreter "/usr/local/bin/pipenv")
-              (setq python-shell-interpreter-args "run ipython --simple-prompt --pprint")
+              (setq python-shell-interpreter "/home/hitman/miniconda3/bin/python")
+              ;; (setq python-shell-interpreter-args "run ipython --simple-prompt --pprint")
               (setq python-indent-offset 4)))
   (setq lsp-python-ms-executable "/home/hitman/local/python-language-server/output/bin/Release/linux-x64/publish/Microsoft.Python.LanguageServer")
   )
@@ -723,19 +729,16 @@ _s_: bash strict mode
  ;; If there is more than one, they won't work right.
  '(bmkp-last-as-first-bookmark-file "/Users/hitman/.emacs.d/bookmarks")
  '(custom-safe-themes
-   (quote
-    ("6bc2bb2b8de7f68df77642b0615d40dc7850c2906b272d3f83a511f7195b07da" "8148420dfc7500b024735da3399f6d0b21f92bebeb1ff630f59422de719937c6" "5c9d6e9d35f1826a93985c2f4ed1c38151d99fd781e5764b1cfe5352f01345e5" "cc67c4d5fcd37a750975cd50fb2555c9654dc5b92b6fb04d65161bdc4d708b9b" "bcc6775934c9adf5f3bd1f428326ce0dcd34d743a92df48c128e6438b815b44f" "67e998c3c23fe24ed0fb92b9de75011b92f35d3e89344157ae0d544d50a63a72" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
+   '("6bc2bb2b8de7f68df77642b0615d40dc7850c2906b272d3f83a511f7195b07da" "8148420dfc7500b024735da3399f6d0b21f92bebeb1ff630f59422de719937c6" "5c9d6e9d35f1826a93985c2f4ed1c38151d99fd781e5764b1cfe5352f01345e5" "cc67c4d5fcd37a750975cd50fb2555c9654dc5b92b6fb04d65161bdc4d708b9b" "bcc6775934c9adf5f3bd1f428326ce0dcd34d743a92df48c128e6438b815b44f" "67e998c3c23fe24ed0fb92b9de75011b92f35d3e89344157ae0d544d50a63a72" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default))
  '(flycheck-checkers
-   (quote
-    (tsx-tide typescript-tide ada-gnat asciidoctor asciidoc c/c++-clang c/c++-gcc c/c++-cppcheck cfengine chef-foodcritic coffee coffee-coffeelint coq css-csslint css-stylelint cuda-nvcc cwl d-dmd dockerfile-hadolint emacs-lisp emacs-lisp-checkdoc erlang-rebar3 erlang eruby-erubis fortran-gfortran go-gofmt go-golint go-vet go-build go-test go-errcheck go-unconvert go-megacheck go-staticcheck groovy haml handlebars haskell-stack-ghc haskell-ghc haskell-hlint html-tidy javascript-eslint javascript-jshint javascript-standard json-jsonlint json-python-json json-jq jsonnet less less-stylelint llvm-llc lua-luacheck lua markdown-markdownlint-cli markdown-mdl nix nix-linter opam perl perl-perlcritic php php-phpmd php-phpcs processing proselint protobuf-protoc pug puppet-parser puppet-lint python-flake8 python-pylint python-pycompile python-mypy r-lintr racket rpm-rpmlint rst-sphinx rst ruby-rubocop ruby-reek ruby-rubylint ruby ruby-jruby rust-cargo rust rust-clippy scala scala-scalastyle scheme-chicken scss-lint scss-stylelint sass/scss-sass-lint sass scss sh-bash sh-posix-dash sh-posix-bash sh-zsh sh-shellcheck slim slim-lint sql-sqlint systemd-analyze tcl-nagelfar tex-chktex tex-lacheck texinfo textlint typescript-tslint verilog-verilator vhdl-ghdl xml-xmlstarlet xml-xmllint yaml-jsyaml yaml-ruby javascript-tide jsx-tide)))
- '(flycheck-highlighting-mode (quote lines))
+   '(tsx-tide typescript-tide ada-gnat asciidoctor asciidoc c/c++-clang c/c++-gcc c/c++-cppcheck cfengine chef-foodcritic coffee coffee-coffeelint coq css-csslint css-stylelint cuda-nvcc cwl d-dmd dockerfile-hadolint emacs-lisp emacs-lisp-checkdoc erlang-rebar3 erlang eruby-erubis fortran-gfortran go-gofmt go-golint go-vet go-build go-test go-errcheck go-unconvert go-megacheck go-staticcheck groovy haml handlebars haskell-stack-ghc haskell-ghc haskell-hlint html-tidy javascript-eslint javascript-jshint javascript-standard json-jsonlint json-python-json json-jq jsonnet less less-stylelint llvm-llc lua-luacheck lua markdown-markdownlint-cli markdown-mdl nix nix-linter opam perl perl-perlcritic php php-phpmd php-phpcs processing proselint protobuf-protoc pug puppet-parser puppet-lint python-flake8 python-pylint python-pycompile python-mypy r-lintr racket rpm-rpmlint rst-sphinx rst ruby-rubocop ruby-reek ruby-rubylint ruby ruby-jruby rust-cargo rust rust-clippy scala scala-scalastyle scheme-chicken scss-lint scss-stylelint sass/scss-sass-lint sass scss sh-bash sh-posix-dash sh-posix-bash sh-zsh sh-shellcheck slim slim-lint sql-sqlint systemd-analyze tcl-nagelfar tex-chktex tex-lacheck texinfo textlint typescript-tslint verilog-verilator vhdl-ghdl xml-xmlstarlet xml-xmllint yaml-jsyaml yaml-ruby javascript-tide jsx-tide))
+ '(flycheck-highlighting-mode 'lines)
  '(gdb-many-windows t)
  '(global-flycheck-mode t)
- '(imenu-anywhere-buffer-filter-functions (quote (imenu-anywhere-same-project-p)))
+ '(imenu-anywhere-buffer-filter-functions '(imenu-anywhere-same-project-p))
  '(package-selected-packages
-   (quote
-    (counsel ivy-posframe flycheck-rust cargo vterm-toggle yasnippet eyebrowse perspeen lsp-imenu lsp-python-ms lsp-mode lsp-java protobuf-mode dash dash-at-point ccls counsel-gtags company-gtags flymake-json smart-mode-line-powerline-theme js2-mode lsp-ui company-lsp lsp-javascript-typescript magit dockerfile-mode rjsx-mode rjsx indium js-comint helm-dash flymake-solidity solidity-mode go-mode projectile ivy buffer-move dracula-theme pyvenv nov imenu-anywhere counsel-dash rubocop mmm-jinja2 company ivy-gitlab gitlab mvn dired-quick-sort hydra dired+ lorem-ipsum swiper all-the-icons-ivy org org-brain undo-tree avy f s beacon vhdl-tools company-c-headers web-mode nodejs-repl mmm-mode better-shell py-autopep8 toml-mode tide dired-hacks-utils yaml-mode use-package typescript tablist sudo-edit spinner seq restclient queue powershell pdf-tools ox-pandoc org-present org-mobile-sync multi-eshell markdown-mode magit-gh-pulls know-your-http-well key-seq json-mode jinja2-mode ivy-hydra inf-ruby ido-vertical-mode hcl-mode golint go-eldoc go-autocomplete gist ggtags flycheck flx-ido exec-path-from-shell eshell-manual elpy dumb-jump counsel-projectile clojure-mode cl-lib-highlight ansible-doc ag)))
- '(solidity-flycheck-solium-checker-active t)
+   '(ivy-posframe ivy mips-mode ess rg cmake-mode yasnippet vterm-toggle lsp-ui lsp-mode elixir-yasnippets auto-yasnippet counsel flycheck-rust cargo eyebrowse perspeen lsp-imenu protobuf-mode dash dash-at-point ccls counsel-gtags company-gtags flymake-json smart-mode-line-powerline-theme js2-mode company-lsp lsp-javascript-typescript magit dockerfile-mode rjsx-mode rjsx indium js-comint helm-dash flymake-solidity go-mode projectile buffer-move dracula-theme pyvenv nov imenu-anywhere counsel-dash mmm-jinja2 company ivy-gitlab gitlab mvn dired-quick-sort hydra dired+ lorem-ipsum swiper all-the-icons-ivy org org-brain undo-tree avy f s beacon vhdl-tools company-c-headers web-mode nodejs-repl mmm-mode better-shell py-autopep8 toml-mode tide dired-hacks-utils yaml-mode use-package typescript tablist sudo-edit spinner seq restclient queue powershell pdf-tools ox-pandoc org-present org-mobile-sync multi-eshell markdown-mode magit-gh-pulls know-your-http-well key-seq json-mode jinja2-mode inf-ruby ido-vertical-mode hcl-mode golint go-eldoc go-autocomplete gist ggtags flycheck flx-ido exec-path-from-shell eshell-manual elpy dumb-jump counsel-projectile clojure-mode cl-lib-highlight ansible-doc ag))
+ '(solidity-flycheck-solium-checker-active t t)
  '(typescript-indent-level 2))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -806,6 +809,7 @@ SIZE :
   (use-package lsp-mode :commands lsp)
   (use-package lsp-ui :commands lsp-ui-mode)
   (use-package company-lsp :commands company-lsp)
+  (setq lsp-prefer-flymake nil)
   (setq xref-backend-functions 'lsp--xref-backend)
   (setq ccls-executable "/home/hitman/bin/ccls"))
 
@@ -1310,6 +1314,9 @@ Uses `bwb-timestamp-format' for formatting the date/time."
 (use-package rust-mode
   :requires cargo hydra flycheck-rust
   :config
+  (add-hook 'rust-mode-hook
+            (lambda () (setq indent-tabs-mode nil)))
+  (setq rust-format-on-save t)
   (add-to-list 'auto-mode-alist '("\\.rs$" . rust-mode))
   (add-to-list 'exec-path "/home/hitman/.cargo/bin")
   ;; (with-eval-after-load 'flycheck
@@ -1320,6 +1327,30 @@ Uses `bwb-timestamp-format' for formatting the date/time."
     (add-hook 'rust-mode-hook #'lsp)))
   
 
+
+(defun bwb-makefile ()
+  "Inserts sensible Makefile preamble based on https://tech.davis-hansson.com/p/make/"
+  (interactive)
+  (beginning-of-line)
+  (insert "SHELL := bash
+.ONESHELL:
+.SHELLFLAGS := -eu -o pipefail -c
+.DELETE_ON_ERROR:
+MAKEFLAGS += --warn-undefined-variables
+MAKEFLAGS += --no-builtin-rules
+
+ifeq ($(origin .RECIPEPREFIX), undefined)
+  $(error This Make does not support .RECIPEPREFIX. Please use GNU Make 4.0 or later)
+endif
+.RECIPEPREFIX = >
+"))
+
+(use-package rg
+  :ensure t)
+
+
+(add-to-list 'auto-mode-alist '("\\.g4$" . antlr-mode))
 ;;; init.el ends here
+
 
 

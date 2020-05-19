@@ -208,3 +208,23 @@ if [ -f '/home/hitman/local/google-cloud-sdk/completion.bash.inc' ]; then . '/ho
 export PYTHONPATH=$PYTHONPATH:/home/hitman/local/uvtool/
 source ~/.cargo/env
 export PATH=$PATH:/home/hitman/.local/bin/
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/hitman/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/hitman/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/hitman/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/hitman/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+jupyter-start () {
+  bash -c "source /home/hitman/miniconda3/etc/profile.d/conda.sh && conda activate && jupyter lab"
+}
+
+source ~/.bash_completion.d/*
